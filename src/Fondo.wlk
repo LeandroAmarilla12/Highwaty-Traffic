@@ -1,4 +1,5 @@
 import wollok.game.*
+import autos.*
 
 object pista{
 	const initialPosition = game.at(2,0)
@@ -14,8 +15,4 @@ object pista{
 	}
 }
 
-object auto{
-	var property position = game.center()
-	
-	method image() = "auto.png"
-}
+
