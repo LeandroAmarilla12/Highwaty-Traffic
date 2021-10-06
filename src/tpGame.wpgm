@@ -1,5 +1,6 @@
 import wollok.game.*
 import Fondo.*
+import autos.*
 
 program SpyHunter {
 	
