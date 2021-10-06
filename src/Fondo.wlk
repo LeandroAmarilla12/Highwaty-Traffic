@@ -1,12 +1,16 @@
 import wollok.game.*
 
 object pista{
-	var property position = game.at(2,0)
+	const initialPosition = game.at(2,0)
+	var property position = initialPosition
 	
 	method image() = "pista.png"
 	
 	method mover(){
-		position = self.position().down(1)
+		if(self.position().distance(initialPosition)==20){
+		position = initialPosition
+		}
+		else position = self.position().down(1)
 	}
 }
 

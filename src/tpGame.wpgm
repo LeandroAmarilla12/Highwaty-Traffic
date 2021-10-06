@@ -5,14 +5,14 @@ program SpyHunter {
 	
 //	CONFIG	
 	game.title("TP")
-	game.height(36)
-	game.width(30)
+	game.height(38)
+	game.width(34)
 	game.ground("mapita.png")
 	game.cellSize(10)
 	
 // FONDO
 	game.addVisual(pista)
-	game.onTick(500, "pista moviendose", { => pista.mover() })
+	game.onTick(30, "pista moviendose", { => pista.mover() })
 
 	
 // MOVERSE
