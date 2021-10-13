@@ -3,22 +3,9 @@ import Fondo.*
 import autos.*
 
 program SpyHunter {
-	
-//	CONFIG	
-	game.title("TP")
-	game.height(38)
-	game.width(34)
-	game.ground("mapita.png")
-	game.cellSize(10)
-	
-// FONDO
-	game.addVisual(pista)
-	game.onTick(30, "pista moviendose", { => pista.mover() })
-
-	
-// MOVERSE
-	game.addVisualCharacter(auto)
+	juego.iniciar()
 	
 //	START
 	game.start()
 }
+
