@@ -3,7 +3,12 @@ import wollok.game.*
 object juego{
 	const enemigos = []//= [new Enemigo(), new Enemigo(position = game.at())]
 	
-	method aparecerEnemigo(){ enemigos.add(new Enemigo())}
+	method aparecerEnemigo(){ 
+		const enemy = new Enemigo(position = game.at(2.randomUpTo(29),40
+		))
+		enemigos.add(enemy)
+		game.addVisual(enemy)
+	}
 	
 //	method malos(){enemigos.forEach{unEnemigo => game.addVisual(unEnemigo)}
 	
@@ -21,7 +26,7 @@ object juego{
 		
 
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
-		game.onTick(100,"Crear enemigo nuevo", {self.aparecerEnemigo()})
+		game.onTick(1000,"Crear enemigo nuevo", {self.aparecerEnemigo()})
 		
 		// MOVERSE
 		game.addVisualCharacter(auto)
