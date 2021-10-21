@@ -26,7 +26,7 @@ object juego{
 		
 
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
-		game.onTick(1000,"Crear enemigo nuevo", {self.aparecerEnemigo()})
+		game.onTick(3000,"Crear enemigo nuevo", {self.aparecerEnemigo()})
 		
 		// MOVERSE
 		game.addVisualCharacter(auto)
