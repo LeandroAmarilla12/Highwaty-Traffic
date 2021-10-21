@@ -4,8 +4,7 @@ object juego{
 	const enemigos = []//= [new Enemigo(), new Enemigo(position = game.at())]
 	
 	method aparecerEnemigo(){ 
-		const enemy = new Enemigo(position = game.at(2.randomUpTo(29),40
-		))
+		const enemy = new Enemigo(position = game.at(2.randomUpTo(29),40))
 		enemigos.add(enemy)
 		game.addVisual(enemy)
 	}
@@ -24,9 +23,10 @@ object juego{
 		game.addVisual(pista)
 		game.onTick(30, "pista moviendose", { pista.mover() })
 		
-
+		// Enemigos
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
 		game.onTick(3000,"Crear enemigo nuevo", {self.aparecerEnemigo()})
+		game.onCollideDo(auto, { unEnemigo => unEnemigo.chocado() })
 		
 		// MOVERSE
 		game.addVisualCharacter(auto)
@@ -51,12 +51,16 @@ object auto{
 }
 
 class Enemigo inherits ElementoMovil{
-	
+	var vida = 20
 	
 	method image() = "enemy1.png"
 	// abstraer comportamiento comun con la pista
 	
+	method chocado() {vida -= 10}
 	
+	method destruir(){
+		if(vida <= 0){game.removeVisual(self)}
+	}
 }
 
 object pista inherits ElementoMovil(position = game.at(2,0)){
