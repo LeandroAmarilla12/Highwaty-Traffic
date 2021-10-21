@@ -61,6 +61,8 @@ class Enemigo inherits ElementoMovil{
 	method destruir(){
 		if(vida <= 0){game.removeVisual(self)}
 	}
+	
+	method desaparece(){if(self.position().y() <= 0){game.removeVisual(self)}}
 }
 
 object pista inherits ElementoMovil(position = game.at(2,0)){
