@@ -26,8 +26,8 @@ object juego{
 		// Enemigos
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
 		game.onTick(3000,"Crear enemigo nuevo", {self.aparecerEnemigo()})
-		game.onCollideDo(auto, { unEnemigo => unEnemigo.chocado() })
-		
+		//game.onCollideDo(auto, { unEnemigo => unEnemigo.chocado() })
+		game.onTick(5000,"eliminar enemigo",{enemigos.forEach{unEnemigo => unEnemigo.desaparece()}})
 		// MOVERSE
 		game.addVisualCharacter(auto)
 	
