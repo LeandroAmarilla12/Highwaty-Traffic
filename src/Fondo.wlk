@@ -10,11 +10,22 @@ object pista inherits ElementoMovil(position = game.at(2,0)){
 	
 	method mover(){
 		if(self.position().distance(initialPosition)==20){
-		position = initialPosition
+			position = initialPosition
 		}
 		else{self.caer()}
 	}
 }
 
+class Pared{
+	var property position
+	method image() =  "rueda.png"
+	
+	method chocarCon(unAuto)
+					
+}
 
-
+class ParedIzquierda inherits Pared{
+	override method chocarCon(unAuto){
+		unAuto.position(unAuto.position().right(3))
+	}
+}

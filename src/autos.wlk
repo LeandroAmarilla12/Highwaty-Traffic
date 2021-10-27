@@ -10,29 +10,22 @@ object auto{
 	
 	method image() = "auto.png"
 	
-	method chocaPared(){
-		if(!(self.position().x() >= 2 and self.position()<=32)){
-			
-		}
-	}
-	method chocarCon(param1) {
-		//TODO: Código autogenerado 
-	}
+	method crearContorno() = 0
 	
 }
 
 class Enemigo inherits ElementoMovil{
-	var vida = 20
+	
 	const todosLosEnemigos = [] 
 	
 	method image() = "enemy1.png"
 	// abstraer comportamiento comun con la pista
 	
-	method chocado() {vida -= 10}
+	//method chocado() {vida -= 10}
 	
-	method destruir(){
+	/*method destruir(){
 		if(vida <= 0){game.removeVisual(self)}
-	}
+	}*/
 	
 	method desaparece(){
 		if(self.position().y() <= 0){
@@ -41,6 +34,11 @@ class Enemigo inherits ElementoMovil{
 			puntaje.sumarPuntos(99)
 		}
 	}
+	
+	method chocarCon(param1) {
+		//TODO: Código autogenerado 
+	}
+	
 }
 
 

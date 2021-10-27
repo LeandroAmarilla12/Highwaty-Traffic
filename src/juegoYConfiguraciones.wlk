@@ -5,12 +5,18 @@ import Fondo.*
 
 object juego{
 	const property enemigos = []//= [new Enemigo(), new Enemigo(position = game.at())]
+	const paredIzquierda = []
 	var tiempQueSeCreanEnemigos=3000
 	
 	method aparecerEnemigo(){ 
 		const enemy = new Enemigo(position = game.at(2.randomUpTo(29),40) , todosLosEnemigos=enemigos)
 		enemigos.add(enemy)
 		game.addVisual(enemy)
+	}
+	
+	method crearParedIzquierda(){
+		(game.height()/2).times({i => paredIzquierda.add(new ParedIzquierda(position = game.at(2,i*2 -2)))})	
+	
 	}
 	
 //	method malos(){enemigos.forEach{unEnemigo => game.addVisual(unEnemigo)}
@@ -24,9 +30,12 @@ object juego{
 		game.cellSize(10)
 		
 		
+		
 		// FONDO
 		game.addVisual(pista)
 		game.onTick(30, "pista moviendose", { pista.mover() })
+		
+	
 		
 		// Enemigos
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
@@ -35,14 +44,19 @@ object juego{
 		game.onTick(500,"eliminar enemigo",{enemigos.forEach{unEnemigo => unEnemigo.desaparece()}})
 		// MOVERSE
 		game.addVisualCharacter(auto)
-		//game.onCollideDo(auto, { auto.chocarCon(game.colliders(auto))})
 		//Puntaje
 		//game.say(auto, puntaje.verPuntos())
 		game.addVisual(centena)
 		game.addVisual(decena)
 		game.addVisual(unidad)
 		
+		
+		//PAREDES
+		self.crearParedIzquierda()
+		paredIzquierda.forEach({pared => game.addVisual(pared)})
 		// crear un objeto para controlar a los enemigos (objeto corredores, rivales) 		
+		
+		game.onCollideDo(auto, {algo => algo.chocarCon(auto)})
 	}
 }
 
