@@ -6,6 +6,7 @@ import Fondo.*
 object juego{
 	const property enemigos = []//= [new Enemigo(), new Enemigo(position = game.at())]
 	const paredIzquierda = []
+	const property aceite =[]
 	var tiempQueSeCreanEnemigos=3000
 	
 	method aparecerEnemigo(){ 
@@ -13,6 +14,14 @@ object juego{
 		enemigos.add(enemy)
 		game.addVisual(enemy)
 	}
+	
+	method aparecerMancha(){ 
+		const mancha = new ManchaAceite(position = game.at(2.randomUpTo(29),40))
+		aceite.add(mancha)
+		game.addVisual(mancha)
+	}
+	
+	
 	
 	method crearParedIzquierda(){
 		(game.height()/2).times({i => paredIzquierda.add(new ParedIzquierda(position = game.at(2,i*2 -2)))})	
@@ -35,11 +44,17 @@ object juego{
 		game.addVisual(pista)
 		game.onTick(30, "pista moviendose", { pista.mover() })
 		
-	
+		//const mancha =new ManchaAceite(position = game.at(2.randomUpTo(29),40))
 		
 		// Enemigos
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
 		game.onTick(tiempQueSeCreanEnemigos,"Crear enemigo nuevo", {self.aparecerEnemigo()})
+		//game.onTick(tiempQueSeCreanEnemigos*2,"Crea Mancha De Aceite", game.addVisual((mancha)))
+		game.onTick(30,"enemigo moviendose", { aceite.forEach{unEnemigo => unEnemigo.caer()}})
+		game.onTick(tiempQueSeCreanEnemigos*2,"Crear enemigo nuevo", {self.aparecerMancha()})
+		///game.onTick(30,"enemigo moviendose", mancha.caer())
+		
+	
 		//game.onCollideDo(auto, { unEnemigo => unEnemigo.chocado() })
 		game.onTick(500,"eliminar enemigo",{enemigos.forEach{unEnemigo => unEnemigo.desaparece()}})
 		// MOVERSE

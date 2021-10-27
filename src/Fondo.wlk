@@ -29,3 +29,22 @@ class ParedIzquierda inherits Pared{
 		unAuto.position(unAuto.position().right(3))
 	}
 }
+
+class ManchaAceite inherits ElementoMovil{
+	
+	method image() = "aceite.png"
+	
+	method chocarCon(unAuto){
+		self.desplazamientoAleatorio(unAuto)
+	}
+	
+	method desplazamientoAleatorio(unAuto){
+		const desplazamiento = 1.randomUpTo(3)
+		if(desplazamiento.even()){
+			unAuto.position(unAuto.position().right(3))
+		}
+		else{
+			unAuto.position(unAuto.position().left(3))
+		}
+	}
+}
