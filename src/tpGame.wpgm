@@ -1,6 +1,7 @@
 import wollok.game.*
 import Fondo.*
 import autos.*
+import juegoYConfiguraciones.*
 
 program SpyHunter {
 	juego.iniciar()
