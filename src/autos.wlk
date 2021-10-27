@@ -32,7 +32,9 @@ object juego{
 		game.onTick(5000,"eliminar enemigo",{enemigos.forEach{unEnemigo => unEnemigo.desaparece()}})
 		// MOVERSE
 		game.addVisualCharacter(auto)
+		//game.onCollideDo(auto, { auto.chocarCon(game.colliders(auto))})
 		//Puntaje
+		//game.say(auto, puntaje.verPuntos())
 		game.addVisual(centena)
 		game.addVisual(decena)
 		game.addVisual(unidad)
@@ -50,10 +52,22 @@ class ElementoMovil{
 	
 }
 
+
+
 object auto{
 	var property position = game.center()
 	
 	method image() = "auto.png"
+	
+	method chocaPared(){
+		if(!(self.position().x() >= 2 and self.position()<=32)){
+			
+		}
+	}
+	method chocarCon(param1) {
+		//TODO: Código autogenerado 
+	}
+	
 }
 
 class Enemigo inherits ElementoMovil{
@@ -73,7 +87,7 @@ class Enemigo inherits ElementoMovil{
 		if(self.position().y() <= 0){
 			game.removeVisual(self)
 			todosLosEnemigos.remove(self)
-			puntaje.sumarPuntos(100)
+			puntaje.sumarPuntos(99)
 		}
 	}
 }
@@ -86,26 +100,26 @@ object puntaje{
 	}
 }
 
-object centena{
+class Numero{
+	method valor()
+	method image(){
+		return self.valor().stringValue()+".png"
+	}
+}
+object centena inherits Numero{
 	var property position= game.at(20,30)
-	var property centena=puntaje.verPuntos()/100
-	method image(){
-		return (centena).toString()+".png"
-	}
+	override method valor() = puntaje.verPuntos().div(100)
+	
 }
-object decena{
+object decena inherits Numero{
 	var property position= game.at(21,30)
-	var property decena = (puntaje.verPuntos()-centena.centena()*100)/10
-	method image(){
-		return decena.toString()+".png"
-	}
+	override method valor() = (puntaje.verPuntos()-centena.valor()*100).div(10)
+	
 }
-object unidad{
+object unidad inherits Numero{
 	var property position= game.at(22,30)
-	var property unidad = (puntaje.verPuntos()-centena.centena()*100)-decena.decena()*10
-	method image(){
-		return unidad.toString()+".png"
-	}
+	override method valor() = (puntaje.verPuntos()-centena.valor()*100)-decena.valor()*10
+	
 }
 
 object pista inherits ElementoMovil(position = game.at(2,0)){
