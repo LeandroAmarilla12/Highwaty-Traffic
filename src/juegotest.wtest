@@ -1,6 +1,13 @@
+import juegoYConfiguraciones.*
+import autos.*
+import Fondo.*
+import wollok.game.*
 
-test "testX" {
-
-	assert.that(true)
+test "Mancha de Aceite" {
+	const aceite = new ManchaAceite(position = game.at(1,1))
+	const coleccion = []
+	100.times(aceite.chocarCon(auto), coleccion.add(aceite.desplazamiento()))
+	
+	assert.equals(1,(coleccion.asSet()).sizes())
 
 }

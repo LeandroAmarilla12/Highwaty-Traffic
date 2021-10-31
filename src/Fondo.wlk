@@ -1,6 +1,7 @@
 import wollok.game.*
 import autos.*
 import juegoYConfiguraciones.*
+import objetosEnLaPista.*
 
 object pista inherits ElementoMovil(position = game.at(2,0)){
 	const initialPosition = game.at(2,0)
@@ -15,36 +16,32 @@ object pista inherits ElementoMovil(position = game.at(2,0)){
 		else{self.caer()}
 	}
 }
+class Pared inherits ElementoMovil{
+	
+	const valor = 1
 
-class Pared{
-	var property position
+	
 	method image() =  "rueda.png"
 	
-	method chocarCon(unAuto)
+	
+	method chocarCon(unAuto){
+		unAuto.position(unAuto.position().right(valor))
+	}
+	
+	method subir(){
+		if(self.position().y()<= -2){
+			self.position(game.at(self.position().x(),game.height()+1))
+		}
+		else{self.caer()}
+	}
+
 					
 }
 
-class ParedIzquierda inherits Pared{
-	override method chocarCon(unAuto){
-		unAuto.position(unAuto.position().right(3))
-	}
+class ParedIzquierda inherits Pared(valor = 3){	
 }
 
-class ManchaAceite inherits ElementoMovil{
+class ParedDerecha inherits Pared(valor = -3){
 	
-	method image() = "aceite.png"
-	
-	method chocarCon(unAuto){
-		self.desplazamientoAleatorio(unAuto)
-	}
-	
-	method desplazamientoAleatorio(unAuto){
-		const desplazamiento = 1.randomUpTo(3)
-		if(desplazamiento.even()){
-			unAuto.position(unAuto.position().right(3))
-		}
-		else{
-			unAuto.position(unAuto.position().left(3))
-		}
-	}
 }
+
