@@ -11,21 +11,22 @@ object pista inherits ElementoMovil(position = game.at(2,0)){
 	
 	method mover(){
 		if(self.position().distance(initialPosition)==20){
-			position = initialPosition
+			self.position(initialPosition)
 		}
 		else{self.caer()}
 	}
 }
 class Pared inherits ElementoMovil{
 	
-	const valor = 1
+	const valor = 0
 
+	method soyPlayer() = false
 	
 	method image() =  "rueda.png"
 	
 	
-	method chocarCon(unAuto){
-		unAuto.position(unAuto.position().right(valor))
+	method choqueConPlayer(){
+		auto.position(auto.position().right(valor))
 	}
 	
 	method subir(){

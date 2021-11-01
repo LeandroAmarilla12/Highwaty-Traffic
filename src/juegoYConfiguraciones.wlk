@@ -10,6 +10,8 @@ object juego{
 	const pared = []
 	const property aceite =[]
 	const property llaves = []
+	var property balas = []
+	
 	var tiempQueSeCreanEnemigos=3000
 	
 	method aparecerEnemigo(algo, coleccion){ 
@@ -46,7 +48,7 @@ object juego{
 		
 		// Enemigos
 		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
-		game.onTick(tiempQueSeCreanEnemigos,"Crear enemigo nuevo", {self.aparecerEnemigo(new EnemigoAuto(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
+		game.onTick(tiempQueSeCreanEnemigos,"Crear enemigo nuevo", {self.aparecerEnemigo(new EnemigoAuto(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
 		//Manchas De Aciete
 		game.onTick(30,"mancha moviendose", { aceite.forEach{unEnemigo => unEnemigo.caer()}})
 		game.onTick(tiempQueSeCreanEnemigos*2,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite)})
@@ -59,11 +61,11 @@ object juego{
 		game.onTick(500,"eliminar enemigo",{enemigos.forEach{unEnemigo => unEnemigo.desaparece()}})
 		game.onTick(500,"eliminar manchas",{aceite.forEach{unaMancha => unaMancha.desaparece()}})
 		game.onTick(500,"eliminar llaves",{llaves.forEach{unaLlave => unaLlave.desaparece()}})
+		game.onTick(500,"eliminar balas",{balas.forEach{unaBala => unaBala.desaparece()}})
 		
 		// MOVERSE
 		game.addVisualCharacter(auto)
 		game.addVisual(tanque)
-		tanque.disparar()
 		//Puntaje
 		//game.say(auto, puntaje.verPuntos())
 		game.addVisual(centena)
@@ -79,9 +81,14 @@ object juego{
 		
 		// crear un objeto para controlar a los enemigos (objeto corredores, rivales) 		
 		
+		//Tanque
+		game.onTick(10,"movimiento tanque",{tanque.mover()})
+		game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})
+		game.onTick(5,"bala moviendose",{balas.forEach{unaBala => unaBala.caer()}})
 		
 		//COLISIONES
-		game.onCollideDo(auto, {algo => algo.chocarCon(auto)})
+		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
+		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
 	}
 }
 

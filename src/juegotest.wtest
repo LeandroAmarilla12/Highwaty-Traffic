@@ -1,4 +1,5 @@
 import juegoYConfiguraciones.*
+import objetosEnLaPista.*
 import autos.*
 import Fondo.*
 import wollok.game.*

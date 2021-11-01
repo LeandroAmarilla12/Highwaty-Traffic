@@ -12,9 +12,8 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	
 	const todosLosEnemigos = [] 
 	
+	method soyPlayer() = false
 	method image() = imagen
-	
-	
 	
 	method desaparece(){
 		if(self.position().y() <= 0){
@@ -24,18 +23,24 @@ class ObjetoEnLaPista inherits ElementoMovil{
 		}
 	}
 	
-	method chocarCon(unAuto){
-		 unAuto.vida(unAuto.vida()-25)
-		 /*if(unAuto.meMori()){
-		   
-		  }*/
+	method choqueConTanque(){
+		game.removeVisual(self)
+		todosLosEnemigos.remove(self)
 	}
 	
+	method choqueConPlayer(){
+		game.removeVisual(self)
+		todosLosEnemigos.remove(self)
+	}	
 }
 
 class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesaparecer = 0){	
-	override method chocarCon(unAuto){
-		 self.desplazamientoAleatorio(unAuto)
+//	override method chocarCon(unAuto){
+//		 
+//	}
+	
+	override method choqueConPlayer(){
+		self.desplazamientoAleatorio(auto)
 	}
 	
 	method desplazamientoAleatorio(unAuto){
@@ -51,18 +56,15 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 }
 
 class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer = 0){
-	override method chocarCon(unAuto){
-		unAuto.vida(100)
-		game.removeVisual(self)
-		todosLosEnemigos.remove(self)
-	}
-	
+	override method choqueConPlayer(){
+		auto.vida(100)
+		super()
+	}	
 }
 
 class Bala inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
-	override method chocarCon(unAuto){
-		unAuto.vida(unAuto.vida()-50)
-		game.removeVisual(self)
-		todosLosEnemigos.remove(self)
+	override method choqueConPlayer(){
+		auto.vida(auto.vida()-50)
+		super()
 	}
 }
