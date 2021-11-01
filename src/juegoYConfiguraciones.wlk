@@ -65,7 +65,7 @@ object juego{
 		
 		// MOVERSE
 		game.addVisualCharacter(auto)
-		game.addVisual(tanque)
+		
 		//Puntaje
 		//game.say(auto, puntaje.verPuntos())
 		game.addVisual(centena)
@@ -82,13 +82,20 @@ object juego{
 		// crear un objeto para controlar a los enemigos (objeto corredores, rivales) 		
 		
 		//Tanque
-		game.onTick(10,"movimiento tanque",{tanque.mover()})
-		game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})
-		game.onTick(5,"bala moviendose",{balas.forEach{unaBala => unaBala.caer()}})
 		
 		//COLISIONES
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
-		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
+		game.onTick(10, "", {self.peleaTanque()})
+		
+	}
+	method peleaTanque(){
+			if(puntaje.verPuntos()>40){
+				//>>>game.addVisual(tanque)<<<//
+				game.onTick(10,"movimiento tanque",{tanque.mover()})
+				game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})
+				game.onTick(5,"bala moviendose",{balas.forEach{unaBala => unaBala.caer()}})
+				game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
+			}
 	}
 }
 
