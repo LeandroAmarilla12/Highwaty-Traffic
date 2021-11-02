@@ -29,31 +29,36 @@ object juego{
 		(game.height()/2+2).times({i => pared.add(new ParedDerecha(position = game.at(40,i*2 -2)))})	
 	}
 	
-	
-	method iniciar(){
-		//	CONFIG	
+	method configurarTablero(){
 		game.title("TP")
 		game.height(60)
 		game.width(60)
 		game.ground("mapita.png")
 		game.cellSize(10)
+	}
+	
+	method objetoQueCaen(){
+		pista.mover() 
+		enemigos.forEach{unEnemigo => unEnemigo.caer()}
+		aceite.forEach{unEnemigo => unEnemigo.caer()}
+		llaves.forEach{unaLlave => unaLlave.caer()}
+	}
+	
+	method iniciar(){
+		//	CONFIG	
 		
-		
+		self.configurarTablero()
 		
 		// FONDO
 		game.addVisual(pista)
-		game.onTick(30, "pista moviendose", { pista.mover() enemigos.forEach{unEnemigo => unEnemigo.caer() })
+		game.onTick(30, "objetos cayendo", {self.objetoQueCaen()})
 		//game.onTick(1,"Mostrar Corazones",{vida.mostrarVida()})
 		
-		
 		// Enemigos
-		game.onTick(30,"enemigo moviendose", { enemigos.forEach{unEnemigo => unEnemigo.caer()}})
 		game.onTick(tiempQueSeCreanEnemigos,"Crear enemigo nuevo", {self.aparecerEnemigo(new EnemigoAuto(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
 		//Manchas De Aciete
-		game.onTick(30,"mancha moviendose", { aceite.forEach{unEnemigo => unEnemigo.caer()}})
 		game.onTick(tiempQueSeCreanEnemigos*2,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite)})
 		//Llaves
-		game.onTick(30,"llaves moviendose", { llaves.forEach{unaLlave => unaLlave.caer()}})
 		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves)})
 		
 	
