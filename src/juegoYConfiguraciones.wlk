@@ -43,7 +43,7 @@ object juego{
 		// FONDO
 		game.addVisual(pista)
 		game.onTick(30, "pista moviendose", { pista.mover() })
-		
+		game.onTick(1,"Mostrar Corazones",{vida.mostrarVida()})
 		
 		
 		// Enemigos

@@ -4,11 +4,11 @@ import autos.*
 import Fondo.*
 import wollok.game.*
 
-test "Mancha de Aceite" {
-	const aceite = new ManchaAceite(position = game.at(1,1))
-	const coleccion = []
-	100.times(auto.chocarCon(aceite), coleccion.add(aceite.desplazamiento()))
-	
-	assert.equals(1,(coleccion.asSet()).sizes())
-
-}
+//test "Mancha de Aceite" {
+//	const aceite = new ManchaAceite(position = game.at(1,1))
+//	const coleccion = []
+//	100.times(auto.chocarCon(aceite), coleccion.add(aceite.desplazamiento()))
+//	
+//	assert.equals(1,(coleccion.asSet()).sizes())
+//
+//}
