@@ -8,6 +8,6 @@ program SpyHunter {
 	juego.iniciar()
 	
 //	START
-	game.start()
+	game.start() 
 }
 

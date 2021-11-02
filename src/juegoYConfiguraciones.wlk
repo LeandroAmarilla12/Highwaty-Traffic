@@ -42,8 +42,8 @@ object juego{
 		
 		// FONDO
 		game.addVisual(pista)
-		game.onTick(30, "pista moviendose", { pista.mover() })
-		game.onTick(1,"Mostrar Corazones",{vida.mostrarVida()})
+		game.onTick(30, "pista moviendose", { pista.mover() enemigos.forEach{unEnemigo => unEnemigo.caer() })
+		//game.onTick(1,"Mostrar Corazones",{vida.mostrarVida()})
 		
 		
 		// Enemigos
@@ -85,17 +85,22 @@ object juego{
 		
 		//COLISIONES
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
-		game.onTick(10, "", {self.peleaTanque()})
+		
+		game.schedule(20000, {game.removeTickEvent("Crear enemigo nuevo")  game.removeTickEvent("enemigo moviendose") game.onTick(5000, "", {self.peleaTanque()})})
+		game.schedule(25000,{game.removeTickEvent("eliminar enemigo") game.addVisual(tanque) })
+		//game.schedule(20000, game.addVisual(tanque))
+		//, game.addVisual(tanque),game.removeTickEvent("enemigo moviendose"), game.removeTickEvent("eliminar enemigo") })
+		//game.onTick(10, "", {self.peleaTanque()})
 		
 	}
-	method peleaTanque(){
-			if(puntaje.verPuntos()>40){
-				//>>>game.addVisual(tanque)<<<//
+	
+	
+	method peleaTanque(){					
 				game.onTick(10,"movimiento tanque",{tanque.mover()})
 				game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})
 				game.onTick(5,"bala moviendose",{balas.forEach{unaBala => unaBala.caer()}})
 				game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
-			}
+			
 	}
 }
 

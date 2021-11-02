@@ -10,7 +10,7 @@ object pista inherits ElementoMovil(position = game.at(2,0)){
 		
 	
 	method mover(){
-		if(self.position().distance(initialPosition)==20){
+		if(self.position().distance(initialPosition)==32){
 			self.position(initialPosition)
 		}
 		else{self.caer()}
