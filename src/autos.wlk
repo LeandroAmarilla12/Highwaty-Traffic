@@ -7,8 +7,34 @@ import objetosEnLaPista.*
 
 object auto{
 	var property position = game.center()
+	var posicionAux = self.position()
 	var property image = "auto.png"
+	var property cancelarDisparo = 5
+	const property bloques =[]
 	
+	method crearBloques(){
+		self.crearALaIzquierda(2, 3)
+		bloques.forEach({bloque=>game.addVisual(bloque)})
+	}
+	method crearALaIzquierda(cuantosIzquierda, cuantosAbajo){
+			cuantosIzquierda.times({i=>self.crearAbajo(cuantosAbajo)})
+		}
+		
+	method crearAbajo(cuantosAbajo){
+		cuantosAbajo.times({i=>bloques.add(new BloqueInvisible(position=posicionAux.up(i)))})
+		posicionAux=posicionAux.right(1)
+	}
+	
+	method vertical(sentido){
+		self.position(self.position().up(sentido))
+		//mover bloques
+		bloques.forEach({bloque=>bloque.position(bloque.position().up(sentido))})
+	}
+	method horizontal(sentido){
+		self.position(self.position().right(sentido))
+		//mover bloques
+		bloques.forEach({bloque=>bloque.position(bloque.position().right(sentido))})
+	}
 	method soyPlayer() = true
 	method image() = image
 	
@@ -21,7 +47,10 @@ object auto{
 	}
 	
 	method disparar(){
-		juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(2) , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer())
+		if(cancelarDisparo>0){
+			juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(2) , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer())
+			self.cancelarDisparo(self.cancelarDisparo()-1)
+		}
 	}
 	
 }

@@ -26,7 +26,7 @@ class Pared inherits ElementoMovil{
 	
 	
 	method choqueConPlayer(){
-		auto.position(auto.position().right(valor))
+		auto.horizontal(valor)
 	}
 	
 	method subir(){

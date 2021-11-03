@@ -29,7 +29,7 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	}
 	
 	method desaparece(){
-		if(self.position().y() <= 0){
+		if(self.position().y() <= -3 or self.position().y() >= game.height()-5){
 			self.removerObjeto()
 			puntaje.sumarPuntos(valorXDesaparecer)
 		}
@@ -61,10 +61,10 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 	method desplazamientoAleatorio(unAuto){
 		const desplazamiento = 1.randomUpTo(10).truncate(0)
 		if(desplazamiento.even()){
-			unAuto.position(unAuto.position().right(3))
+			unAuto.horizontal(3)
 		}
 		else{
-			unAuto.position(unAuto.position().left(3))
+			unAuto.horizontal(-3)
 		}
 		
 	}
@@ -93,5 +93,15 @@ class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 	}
 	override method caer(){
 		position = self.position().up(1)
+		self.desaparece() 
+		if(!game.hasVisual(self)){
+			auto.cancelarDisparo(auto.cancelarDisparo()+1)
+		}
 	}
+}
+
+class BloqueInvisible{
+	var property position
+	
+	method image() = "pixel.png"
 }

@@ -12,6 +12,7 @@ object juego{
 	const property llaves = []
 	var property balasDeTanque = []
 	var property balasDePlayer = []
+	var property segundos = 0
 	
 	method iniciar(){
 		
@@ -44,9 +45,19 @@ object juego{
 	}
 	
 	method agregarPlayer(){
-		game.addVisualCharacter(auto)
+		game.addVisual(auto)
+		auto.crearBloques()
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
+		auto.bloques().forEach({bloque=>game.onCollideDo(bloque, {algo => auto.chocarCon(algo)})})
 		keyboard.space().onPressDo { auto.disparar() }
+		self.movimientoAuto()
+	}
+	
+	method movimientoAuto(){
+		keyboard.up().onPressDo { auto.vertical(1) }
+		keyboard.down().onPressDo { auto.vertical(-1) }
+		keyboard.right().onPressDo { auto.horizontal(1) }
+		keyboard.left().onPressDo { auto.horizontal(-1) }
 	}
 	
 	method agregarPuntaje(){
@@ -79,9 +90,10 @@ object juego{
 		(game.height()/2+2).times({i => pared.add(new ParedDerecha(position = game.at(40,i*2 -2)))})	
 	}
 	method crearEnemigos(){
-		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
+		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos),enemigos)}) 
 		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite)})
 		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves)})
+		
 	}
 	method agregarBordesDeRuta(){
 		self.crearParedIzquierda()
@@ -104,6 +116,9 @@ object juego{
 		game.addVisual(tanque) 
 		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
 		game.onTick(100,"accion tanque",{tanque.mover() tanque.disparar()})
+	}
+	method sumarSegundos() {
+		segundos+=1
 	}
 }
 
