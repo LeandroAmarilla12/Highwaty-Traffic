@@ -19,25 +19,28 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	var valorXDesaparecer 
 	
 	const todosLosEnemigos = [] 
-	
+	const property bloques =[]
 	method soyPlayer() = false
 	method image() = imagen
 	
 	override method caer(){
 		super()
 		self.desaparece()
+		bloques.forEach({bloque=>bloque.position(bloque.position().down(1))})
 	}
 	
 	method desaparece(){
 		if(self.position().y() <= -3 or self.position().y() >= game.height()-5){
 			self.removerObjeto()
 			puntaje.sumarPuntos(valorXDesaparecer)
+			
 		}
 	}
 	
 	method removerObjeto(){
 		game.removeVisual(self)
 		todosLosEnemigos.remove(self)
+		bloques.forEach({bloque=>game.removeVisual(bloque)})
 	}
 	
 	method choqueConTanque(){
@@ -84,6 +87,7 @@ class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 		vida.cantidad(vida.cantidad()-2)
 		super()
 	}
+	override method choqueConTanque(){}
 	
 	}
 class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
@@ -93,15 +97,33 @@ class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 	}
 	override method caer(){
 		position = self.position().up(1)
+		bloques.forEach({bloque=>bloque.position(bloque.position().up(1))})
 		self.desaparece() 
 		if(!game.hasVisual(self)){
 			auto.cancelarDisparo(auto.cancelarDisparo()+1)
 		}
+		
 	}
+	override method choqueConPlayer(){
+	}
+	
 }
 
 class BloqueInvisible{
 	var property position
-	
+	const duenio
+	method soyPlayer() = false
 	method image() = "pixel.png"
+	
+	method chocarCon(algo){
+		//duenio.chocarCon(algo)
+		algo.choqueConPlayer()
+	}
+	
+	method choqueConPlayer(){
+		duenio.choqueConPlayer()	
+	}
+	method choqueConTanque(){
+		duenio.choqueConTanque()	
+	}
 }
