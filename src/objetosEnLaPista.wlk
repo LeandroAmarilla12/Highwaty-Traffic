@@ -5,6 +5,14 @@ import Fondo.*
 import juegoYConfiguraciones.*
 
 
+class ElementoMovil{
+	var property position 
+	
+	method caer(){
+		position = self.position().down(1)
+	}
+	
+}
 
 class ObjetoEnLaPista inherits ElementoMovil{
 	var imagen 
@@ -64,8 +72,8 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 
 class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer = 0){
 	override method choqueConPlayer(){
-		if (auto.vida() < 100){			
-			auto.vida(100)
+		if (vida.cantidad() < 4){			
+			vida.cantidad(4)
 			super()
 		}
 	}	
@@ -73,7 +81,7 @@ class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer
 
 class Bala inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
 	override method choqueConPlayer(){
-		auto.vida(auto.vida()-50)
+		vida.cantidad(vida.cantidad()-2)
 		super()
 	}
 }

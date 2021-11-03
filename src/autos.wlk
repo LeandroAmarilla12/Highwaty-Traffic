@@ -6,7 +6,6 @@ import objetosEnLaPista.*
 
 
 object auto{
-	var property vida = 100
 	var property position = game.center()
 	var property image = "auto.png"
 	
@@ -15,7 +14,7 @@ object auto{
 	
 	method crearContorno() = 0
 	
-	method meMori() = vida <=0
+	method meMori() = vida.cantidad() <= 0
 	
 	method chocarCon(algo){
 		algo.choqueConPlayer()
@@ -25,7 +24,7 @@ object auto{
 
 class EnemigoAuto inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesaparecer = 10){
 	override method choqueConPlayer(){
-		auto.vida(auto.vida()-25)
+		vida.cantidad(vida.cantidad()-1)
 		super()
 	}
 }
