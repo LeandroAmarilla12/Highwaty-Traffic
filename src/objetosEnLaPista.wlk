@@ -15,6 +15,11 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	method soyPlayer() = false
 	method image() = imagen
 	
+	override method caer(){
+		super()
+		self.desaparece()
+	}
+	
 	method desaparece(){
 		if(self.position().y() <= 0){
 			self.removerObjeto()
@@ -46,7 +51,7 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 	}
 	
 	method desplazamientoAleatorio(unAuto){
-		const desplazamiento = 1.randomUpTo(99)
+		const desplazamiento = 1.randomUpTo(10).truncate(0)
 		if(desplazamiento.even()){
 			unAuto.position(unAuto.position().right(3))
 		}
