@@ -22,7 +22,7 @@ object auto{
 	
 }
 
-class EnemigoAuto inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesaparecer = 10){
+class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesaparecer = 10){
 	override method choqueConPlayer(){
 		vida.cantidad(vida.cantidad()-1)
 		super()
@@ -46,6 +46,9 @@ object tanque{
 		if (self.position().x()<=5 or self.position().x()>=30){
 			valor = valor*-1
 		}
+	}
+	method disparar(){
+		if(1.randomUpTo(20)>=15) juego.aparecerEnemigo(new Bala(position = self.position() , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque())
 	}
 }
 

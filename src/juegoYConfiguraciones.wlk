@@ -10,7 +10,7 @@ object juego{
 	const pared = []
 	const property aceite =[]
 	const property llaves = []
-	var property balas = []
+	var property balasDeTanque = []
 	
 	method iniciar(){
 		
@@ -26,11 +26,7 @@ object juego{
 		
 		game.onTick(30, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
 
-		game.onTick(3000,"Crear enemigo nuevo", {self.aparecerEnemigo(new EnemigoAuto(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
-		
-		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite)})
-		
-		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves)})
+		self.crearEnemigos()
 		
 		self.agregarBordesDeRuta()
 		
@@ -63,7 +59,7 @@ object juego{
 	}
 	
 	method todosLosObjetos(){
-		return enemigos + aceite + balas + llaves
+		return enemigos + aceite + balasDeTanque + llaves
 	}
 	
 	method aparecerEnemigo(algo, coleccion){ 
@@ -80,7 +76,11 @@ object juego{
 	method crearParedDerecha(){
 		(game.height()/2+2).times({i => pared.add(new ParedDerecha(position = game.at(40,i*2 -2)))})	
 	}
-	
+	method crearEnemigos(){
+		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
+		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite)})
+		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves)})
+	}
 	method agregarBordesDeRuta(){
 		self.crearParedIzquierda()
 		self.crearParedDerecha()
@@ -89,14 +89,19 @@ object juego{
 	}
 	
 	method etapaFinal(){
-		game.schedule(30000, {game.removeTickEvent("Crear enemigo nuevo")})
-		game.schedule(50000,{self.accionesTanque()})
+		game.schedule(3000, {self.removerAcciones()})
+		game.schedule(5000,{self.accionesTanque()})
 	}
 	
+	method removerAcciones(){
+		game.removeTickEvent("Crear enemigo auto amarillo")
+		game.removeTickEvent("Crear nueva mancha de aceite")
+		game.removeTickEvent("Crear nueva llave reparadora")
+	}
 	method accionesTanque(){					
 		game.addVisual(tanque) 
 		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
-		game.onTick(100,"movimiento tanque",{tanque.mover()})
-		game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})}
+		game.onTick(100,"accion tanque",{tanque.mover() tanque.disparar()})
+	}
 }
 
