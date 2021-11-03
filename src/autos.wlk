@@ -21,7 +21,7 @@ object auto{
 	}
 	
 	method disparar(){
-		juego.aparecerEnemigo(new BalaDePlayer(position = self.position() , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer())
+		juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(2) , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer())
 	}
 	
 }
@@ -53,7 +53,7 @@ object tanque{
 		}
 	}
 	method disparar(){
-		if(1.randomUpTo(20)>=15) juego.aparecerEnemigo(new BalaDeTanque(position = self.position() , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque())
+		if(1.randomUpTo(20)>=15) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(3).down(2) , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque())
 	}
 }
 
