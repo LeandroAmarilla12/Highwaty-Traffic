@@ -17,20 +17,22 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	
 	method desaparece(){
 		if(self.position().y() <= 0){
-			game.removeVisual(self)
-			todosLosEnemigos.remove(self)
+			self.removerObjeto()
 			puntaje.sumarPuntos(valorXDesaparecer)
 		}
 	}
 	
-	method choqueConTanque(){
+	method removerObjeto(){
 		game.removeVisual(self)
 		todosLosEnemigos.remove(self)
 	}
 	
+	method choqueConTanque(){
+		self.removerObjeto()
+	}
+	
 	method choqueConPlayer(){
-		game.removeVisual(self)
-		todosLosEnemigos.remove(self)
+		self.removerObjeto()	
 	}	
 }
 
@@ -57,8 +59,10 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 
 class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer = 0){
 	override method choqueConPlayer(){
-		auto.vida(100)
-		super()
+		if (auto.vida() < 100){			
+			auto.vida(100)
+			super()
+		}
 	}	
 }
 

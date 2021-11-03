@@ -42,6 +42,14 @@ object juego{
 		enemigos.forEach{unEnemigo => unEnemigo.caer()}
 		aceite.forEach{unEnemigo => unEnemigo.caer()}
 		llaves.forEach{unaLlave => unaLlave.caer()}
+//		balas.forEach{unaBala => unaBala.caer()}
+	}
+	
+	method desaparecerObjetos(){
+		enemigos.forEach{unEnemigo => unEnemigo.desaparece()}
+		aceite.forEach{unaMancha => unaMancha.desaparece()}
+		llaves.forEach{unaLlave => unaLlave.desaparece()}
+		balas.forEach{unaBala => unaBala.desaparece()}
 	}
 	
 	method iniciar(){
@@ -63,10 +71,7 @@ object juego{
 		
 	
 		//game.onCollideDo(auto, { unEnemigo => unEnemigo.chocado() })
-		game.onTick(500,"eliminar enemigo",{enemigos.forEach{unEnemigo => unEnemigo.desaparece()}})
-		game.onTick(500,"eliminar manchas",{aceite.forEach{unaMancha => unaMancha.desaparece()}})
-		game.onTick(500,"eliminar llaves",{llaves.forEach{unaLlave => unaLlave.desaparece()}})
-		game.onTick(500,"eliminar balas",{balas.forEach{unaBala => unaBala.desaparece()}})
+		game.onTick(2000,"Todos los Objetos desaparecen",{self.desaparecerObjetos()})
 		
 		// MOVERSE
 		game.addVisualCharacter(auto)
@@ -87,12 +92,10 @@ object juego{
 		// crear un objeto para controlar a los enemigos (objeto corredores, rivales) 		
 		
 		//Tanque
-		
 		//COLISIONES
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
-		
-		game.schedule(20000, {game.removeTickEvent("Crear enemigo nuevo")  game.removeTickEvent("enemigo moviendose") game.onTick(5000, "", {self.peleaTanque()})})
-		game.schedule(25000,{game.removeTickEvent("eliminar enemigo") game.addVisual(tanque) })
+		game.schedule(20000, {game.removeTickEvent("Crear enemigo nuevo")})
+		game.schedule(25000,{game.removeTickEvent("eliminar enemigo") self.accionesTanque()})
 		//game.schedule(20000, game.addVisual(tanque))
 		//, game.addVisual(tanque),game.removeTickEvent("enemigo moviendose"), game.removeTickEvent("eliminar enemigo") })
 		//game.onTick(10, "", {self.peleaTanque()})
@@ -100,13 +103,11 @@ object juego{
 	}
 	
 	
-	method peleaTanque(){					
-				game.onTick(10,"movimiento tanque",{tanque.mover()})
-				game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})
-				game.onTick(5,"bala moviendose",{balas.forEach{unaBala => unaBala.caer()}})
-				game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
-			
-	}
+	method accionesTanque(){					
+		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
+		game.addVisual(tanque) 
+		game.onTick(10,"movimiento tanque",{tanque.mover()})
+		game.onTick(5000,"tanque dispara", {self.aparecerEnemigo(new Bala(position = tanque.position() , todosLosEnemigos = balas), balas)})}
 }
 
 class ElementoMovil{
