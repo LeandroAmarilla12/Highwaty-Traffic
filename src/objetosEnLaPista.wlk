@@ -79,9 +79,19 @@ class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer
 	}	
 }
 
-class Bala inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
+class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
 	override method choqueConPlayer(){
 		vida.cantidad(vida.cantidad()-2)
 		super()
+	}
+	
+	}
+class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
+	override method choqueConTanque(){
+		tanque.vida(tanque.vida()-1)
+		super()
+	}
+	override method caer(){
+		position = self.position().up(1)
 	}
 }

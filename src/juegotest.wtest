@@ -12,3 +12,20 @@ import wollok.game.*
 //	assert.equals(1,(coleccion.asSet()).sizes())
 //
 //}
+describe "test"{
+	
+	test "tanque tiene 5 de vida al recibir disparo 5 veces"{
+		auto.disparar()
+		tanque.chocarCon(juego.balasDePlayer().first())
+		auto.disparar()
+		tanque.chocarCon(juego.balasDePlayer().first())	
+		auto.disparar()
+		tanque.chocarCon(juego.balasDePlayer().first())	
+		auto.disparar()
+		tanque.chocarCon(juego.balasDePlayer().first())	
+		auto.disparar()
+		tanque.chocarCon(juego.balasDePlayer().first())	
+		assert.equals(5,tanque.vida())
+	}
+	
+}

@@ -11,12 +11,13 @@ object juego{
 	const property aceite =[]
 	const property llaves = []
 	var property balasDeTanque = []
+	var property balasDePlayer = []
 	
 	method iniciar(){
 		
 		self.configurarTablero()
 		
-		game.addVisual(pista) // agrego primero para que este debajo
+		game.addVisual(pista) // agrego primero para que este debajo de todo
 	
 		self.agregarPlayer()
 		
@@ -45,6 +46,7 @@ object juego{
 	method agregarPlayer(){
 		game.addVisualCharacter(auto)
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
+		keyboard.space().onPressDo { auto.disparar() }
 	}
 	
 	method agregarPuntaje(){
@@ -59,7 +61,7 @@ object juego{
 	}
 	
 	method todosLosObjetos(){
-		return enemigos + aceite + balasDeTanque + llaves
+		return enemigos + aceite + balasDeTanque + balasDePlayer + llaves
 	}
 	
 	method aparecerEnemigo(algo, coleccion){ 

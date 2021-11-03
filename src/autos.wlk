@@ -20,6 +20,10 @@ object auto{
 		algo.choqueConPlayer()
 	}
 	
+	method disparar(){
+		juego.aparecerEnemigo(new BalaDePlayer(position = self.position() , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer())
+	}
+	
 }
 
 class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesaparecer = 10){
@@ -32,6 +36,7 @@ class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesapar
 object tanque{
 	var property position= game.at(5,40)
 	var valor = 1
+	var property vida = 10
 	method soyPlayer() = false
 	method image() = "tanque.png"
 	method choqueConPlayer(){
@@ -48,7 +53,7 @@ object tanque{
 		}
 	}
 	method disparar(){
-		if(1.randomUpTo(20)>=15) juego.aparecerEnemigo(new Bala(position = self.position() , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque())
+		if(1.randomUpTo(20)>=15) juego.aparecerEnemigo(new BalaDeTanque(position = self.position() , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque())
 	}
 }
 
