@@ -30,7 +30,7 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	}
 	
 	method desaparece(){
-		if(self.position().y() <= -3 or self.position().y() >= game.height()-5){
+		if(self.position().y() <= -3 or self.position().y() >= game.height()+6){
 			self.removerObjeto()
 			puntaje.sumarPuntos(valorXDesaparecer)
 			
