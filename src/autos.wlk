@@ -88,7 +88,7 @@ object tanque{
 		}
 	}
 	method disparar(){
-		if(1.randomUpTo(20)>=15) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(3).down(2) , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque(),3,3)
+		if(1.randomUpTo(20)==19) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(3).down(2) , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque(),3,3)
 	}
 }
 

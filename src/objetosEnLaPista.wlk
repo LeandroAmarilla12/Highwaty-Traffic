@@ -17,6 +17,7 @@ class ElementoMovil{
 class ObjetoEnLaPista inherits ElementoMovil{
 	var imagen 
 	var valorXDesaparecer 
+	var estoyVivo=true
 	
 	const todosLosEnemigos = [] 
 	const property bloques =[]
@@ -38,9 +39,12 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	}
 	
 	method removerObjeto(){
-		game.removeVisual(self)
-		todosLosEnemigos.remove(self)
-		bloques.forEach({bloque=>game.removeVisual(bloque)})
+		if(estoyVivo){
+			game.removeVisual(self)
+			todosLosEnemigos.remove(self)
+			bloques.forEach({bloque=>game.removeVisual(bloque)})
+			estoyVivo=false
+		}
 	}
 	
 	method choqueConTanque(){
@@ -113,7 +117,7 @@ class BloqueInvisible{
 	var property position
 	const duenio
 	method soyPlayer() = false
-	method image() = "pixel.png"
+	//method image() = "pixel.png"
 	
 	method chocarCon(algo){
 		//duenio.chocarCon(algo)
