@@ -17,27 +17,34 @@ class ElementoMovil{
 class ObjetoEnLaPista inherits ElementoMovil{
 	var imagen 
 	var valorXDesaparecer 
+	var estoyVivo=true
 	
 	const todosLosEnemigos = [] 
-	
+	const property bloques =[]
 	method soyPlayer() = false
 	method image() = imagen
 	
 	override method caer(){
 		super()
 		self.desaparece()
+		bloques.forEach({bloque=>bloque.position(bloque.position().down(1))})
 	}
 	
 	method desaparece(){
-		if(self.position().y() <= 0){
+		if(self.position().y() <= -3 or self.position().y() >= game.height()+6){
 			self.removerObjeto()
 			puntaje.sumarPuntos(valorXDesaparecer)
+			
 		}
 	}
 	
 	method removerObjeto(){
-		game.removeVisual(self)
-		todosLosEnemigos.remove(self)
+		if(estoyVivo){
+			game.removeVisual(self)
+			todosLosEnemigos.remove(self)
+			bloques.forEach({bloque=>game.removeVisual(bloque)})
+			estoyVivo=false
+		}
 	}
 	
 	method choqueConTanque(){
@@ -61,10 +68,10 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 	method desplazamientoAleatorio(unAuto){
 		const desplazamiento = 1.randomUpTo(10).truncate(0)
 		if(desplazamiento.even()){
-			unAuto.position(unAuto.position().right(3))
+			unAuto.horizontal(3)
 		}
 		else{
-			unAuto.position(unAuto.position().left(3))
+			unAuto.horizontal(-3)
 		}
 		
 	}
@@ -84,6 +91,7 @@ class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 		vida.cantidad(vida.cantidad()-2)
 		super()
 	}
+	override method choqueConTanque(){}
 	
 	}
 class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
@@ -93,5 +101,33 @@ class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 	}
 	override method caer(){
 		position = self.position().up(1)
+		bloques.forEach({bloque=>bloque.position(bloque.position().up(1))})
+		self.desaparece() 
+		if(!game.hasVisual(self)){
+			auto.cancelarDisparo(auto.cancelarDisparo()+1)
+		}
+		
+	}
+	override method choqueConPlayer(){
+	}
+	
+}
+
+class BloqueInvisible{
+	var property position
+	const duenio
+	method soyPlayer() = false
+	//method image() = "pixel.png"
+	
+	method chocarCon(algo){
+		//duenio.chocarCon(algo)
+		algo.choqueConPlayer()
+	}
+	
+	method choqueConPlayer(){
+		duenio.choqueConPlayer()	
+	}
+	method choqueConTanque(){
+		duenio.choqueConTanque()	
 	}
 }

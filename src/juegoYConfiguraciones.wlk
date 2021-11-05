@@ -12,6 +12,23 @@ object juego{
 	const property llaves = []
 	var property balasDeTanque = []
 	var property balasDePlayer = []
+	var property segundos = 0
+	
+	var posicionAux 
+	
+	method crearBloques(aLaDer,arriba,objeto){
+		posicionAux=objeto.position()
+		self.crearALaDerecha(aLaDer,arriba,objeto)
+		objeto.bloques().forEach({bloque=>game.addVisual(bloque)})
+	}
+	method crearALaDerecha(aLaDer, arriba,objeto){
+			aLaDer.times({i=>self.crearArriba(arriba,objeto)})
+	}
+	method crearArriba(cuantosArriba,objeto){
+		cuantosArriba.times({i=>objeto.bloques().add(new BloqueInvisible(position=posicionAux.up(i),duenio=objeto))})
+		posicionAux=posicionAux.right(1)
+		objeto.bloques().add(new BloqueInvisible(position=posicionAux.left(1),duenio=objeto))
+	}
 	
 	method iniciar(){
 		
@@ -19,17 +36,23 @@ object juego{
 		
 		game.addVisual(pista) // agrego primero para que este debajo de todo
 	
+		self.agregarBordesDeRuta()
+		
 		self.agregarPlayer()
 		
 		self.agregarPuntaje()
-		
+
 		game.addVisual(vida)
 		
+//<<<<<<< HEAD
 		game.onTick(30, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
 
 		//self.crearEnemigos()
+//=======
+		self.crearEnemigos()
+//>>>>>>> branch 'master' of git@github.com:algo1unsam/tpgame-los-perris.git
 		
-		self.agregarBordesDeRuta()
+		game.onTick(30, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
 		
 		//Tanque
 		self.etapaFinal()
@@ -44,9 +67,19 @@ object juego{
 	}
 	
 	method agregarPlayer(){
-		game.addVisualCharacter(auto)
+		game.addVisual(auto)
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
 		keyboard.space().onPressDo { auto.disparar() }
+		self.movimientoAuto()
+		self.crearBloques(2,3,auto)
+		auto.bloques().forEach({bloque=>game.onCollideDo(bloque, {algo => bloque.chocarCon(algo)})})
+	}
+	
+	method movimientoAuto(){
+		keyboard.up().onPressDo { auto.vertical(1) }
+		keyboard.down().onPressDo { auto.vertical(-1) }
+		keyboard.right().onPressDo { auto.horizontal(1) }
+		keyboard.left().onPressDo { auto.horizontal(-1) }
 	}
 	
 	method agregarPuntaje(){
@@ -54,6 +87,7 @@ object juego{
 		game.addVisual(decena)
 		game.addVisual(unidad)
 	}
+
 	
 	method objetosQueCaen(){
 		pista.mover() 
@@ -64,10 +98,11 @@ object juego{
 		return enemigos + aceite + balasDeTanque + balasDePlayer + llaves
 	}
 	
-	method aparecerEnemigo(algo, coleccion){ 
+	method aparecerEnemigo(algo, coleccion,izq,arriba){ 
 		const enemy = algo
 		coleccion.add(enemy)
 		game.addVisual(enemy)
+		self.crearBloques(izq,arriba,algo)
 	}
 	
 	method crearParedIzquierda(){
@@ -78,10 +113,12 @@ object juego{
 	method crearParedDerecha(){
 		(game.height()/2+2).times({i => pared.add(new ParedDerecha(position = game.at(40,i*2 -2)))})	
 	}
+	
 	method crearEnemigos(){
-		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos), enemigos)})
-		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite)})
-		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves)})
+		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos),enemigos,2,4)}) 
+		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite,2,2)})
+		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves,3,3)})
+		
 	}
 	method agregarBordesDeRuta(){
 		self.crearParedIzquierda()
@@ -91,8 +128,8 @@ object juego{
 	}
 	
 	method etapaFinal(){
-		game.schedule(3000, {self.removerAcciones()})
-		game.schedule(5000,{self.accionesTanque()})
+		game.schedule(30000, {self.removerAcciones()})
+		game.schedule(35000,{self.accionesTanque()})
 	}
 	
 	method removerAcciones(){
@@ -104,6 +141,10 @@ object juego{
 		game.addVisual(tanque) 
 		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
 		game.onTick(100,"accion tanque",{tanque.mover() tanque.disparar()})
+		self.crearBloques(8,14,tanque)
 	}
+	//method sumarSegundos() {
+	//	segundos+=1
+	//}
 }
 
