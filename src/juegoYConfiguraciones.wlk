@@ -27,7 +27,7 @@ object juego{
 		
 		game.onTick(30, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
 
-		self.crearEnemigos()
+		//self.crearEnemigos()
 		
 		self.agregarBordesDeRuta()
 		

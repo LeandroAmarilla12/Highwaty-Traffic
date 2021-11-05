@@ -33,3 +33,5 @@ object unidad inherits Numero{
 	override method valor() = (puntaje.verPuntos()-centena.valor()*100)-decena.valor()*10
 	
 }
+
+
