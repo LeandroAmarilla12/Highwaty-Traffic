@@ -3,14 +3,14 @@ import autos.*
 import juegoYConfiguraciones.*
 import objetosEnLaPista.*
 
-object pista inherits ElementoMovil(position = game.at(2,0)){
-	const initialPosition = game.at(2,0)
+object pista inherits ElementoMovil(position = game.at(1,0)){
+	const initialPosition = game.at(1,0)
 
 	method image() = "pista.png"
 		
 	
 	method mover(){
-		if(self.position().distance(initialPosition)==32){
+		if(self.position().distance(initialPosition)==6){
 			self.position(initialPosition)
 		}
 		else{self.caer()}
@@ -22,7 +22,6 @@ class Pared inherits ElementoMovil{
 
 	method soyPlayer() = false
 	
-	method image() =  "rueda.png"
 	
 	
 	method choqueConPlayer(){
@@ -39,10 +38,14 @@ class Pared inherits ElementoMovil{
 					
 }
 
-class ParedIzquierda inherits Pared(valor = 3){	
+class ParedIzquierda inherits Pared(valor = 1){	
+	
+	method image() =  "barreraIzquierda.png"
 }
 
-class ParedDerecha inherits Pared(valor = -3){
+class ParedDerecha inherits Pared(valor = -1){
+	
+	method image() =  "barreraDerecha.png"
 	
 }
 

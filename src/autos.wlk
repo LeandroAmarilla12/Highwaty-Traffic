@@ -6,9 +6,9 @@ import objetosEnLaPista.*
 
 
 object auto{
-	var property position = game.center()
+	var property position = game.at(3,3)
 	//var posicionAux = self.position()
-	var property image = "auto.png"
+	var property image = "player.png"
 	var property cancelarDisparo = 5
 	const property bloques =[]
 	/* 
@@ -50,14 +50,14 @@ object auto{
 	
 	method disparar(){
 		if(cancelarDisparo>0){
-			juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(3) , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer(),3,3)
+			juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(1) , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer(),3,3)
 			self.cancelarDisparo(self.cancelarDisparo()-1)
 		}
 	}
 	
 }
 
-class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesaparecer = 10){
+class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparecer = 10){
 	override method choqueConPlayer(){
 		vida.cantidad(vida.cantidad()-1)
 		super()
@@ -66,7 +66,7 @@ class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemy1.png", valorXDesapar
 
 object tanque{
 	const property bloques =[]
-	var property position= game.at(5,40)
+	var property position= game.at(4,9)
 	var valor = 1
 	var property vida = 10
 	method soyPlayer() = false
@@ -83,12 +83,12 @@ object tanque{
 	method mover(){
 		self.position(self.position().right(valor))
 		bloques.forEach({bloque=>bloque.position(bloque.position().right(valor))})
-		if (self.position().x()<=5 or self.position().x()>=30){
+		if (self.position().x()<=2 or self.position().x()>=5){
 			valor = valor*-1
 		}
 	}
 	method disparar(){
-		if(1.randomUpTo(20)==19) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(3).down(2) , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque(),3,3)
+		if(1.randomUpTo(20)>10) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(1).down(1) , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque(),0,0)
 	}
 }
 

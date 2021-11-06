@@ -7,18 +7,18 @@ import juegoYConfiguraciones.*
 
 object menu{
 
-	
 	method iniciar(){
 		self.configurarTablero()
+		//game.addVisual(pista)
 		self.iniciarJuego()
 	}
 	
 	method configurarTablero(){
 		game.title("TP")
-		game.height(60)
-		game.width(60)
+		game.height(12)
+		game.width(12)
 		game.ground("mapita.png")
-		game.cellSize(10)
+		game.cellSize(50)
 	}
 	
 	method iniciarJuego(){

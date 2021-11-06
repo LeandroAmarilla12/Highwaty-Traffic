@@ -32,7 +32,7 @@ object juego{
 	
 	method iniciar(){
 		
-		self.configurarTablero()
+		//self.configurarTablero()
 		
 		game.addVisual(pista) // agrego primero para que este debajo de todo
 	
@@ -44,15 +44,9 @@ object juego{
 
 		game.addVisual(vida)
 		
-//<<<<<<< HEAD
-		game.onTick(30, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
-
-		//self.crearEnemigos()
-//=======
 		self.crearEnemigos()
-//>>>>>>> branch 'master' of git@github.com:algo1unsam/tpgame-los-perris.git
 		
-		game.onTick(30, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
+		game.onTick(100, "objetos cayendo", {self.objetosQueCaen()}) //hacer caer objetos
 		
 		//Tanque
 		self.etapaFinal()
@@ -71,7 +65,7 @@ object juego{
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
 		keyboard.space().onPressDo { auto.disparar() }
 		self.movimientoAuto()
-		self.crearBloques(2,3,auto)
+		self.crearBloques(1,0,auto)
 		auto.bloques().forEach({bloque=>game.onCollideDo(bloque, {algo => bloque.chocarCon(algo)})})
 	}
 	
@@ -102,29 +96,30 @@ object juego{
 		const enemy = algo
 		coleccion.add(enemy)
 		game.addVisual(enemy)
-		self.crearBloques(izq,arriba,algo)
+		//self.crearBloques(izq,arriba,algo)
 	}
 	
 	method crearParedIzquierda(){
-		(game.height()/2+2).times({i => pared.add(new ParedIzquierda(position = game.at(2,i*2 -2)))})	
+		(game.height()+4).times({i => pared.add(new ParedIzquierda(position = game.at(0,i*2 -2)))})
+		//(game.height()+4).times({i => {self.aparecerEnemigo(new ParedIzquierda(position = game.at(0,i*2 -2)),pared,1,0)}})	
 	
 	}
 	
 	method crearParedDerecha(){
-		(game.height()/2+2).times({i => pared.add(new ParedDerecha(position = game.at(40,i*2 -2)))})	
+		(game.height()/2+2).times({i => pared.add(new ParedDerecha(position = game.at(9,i*2 -2)))})	
 	}
 	
 	method crearEnemigos(){
-		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(4.randomUpTo(29),game.height()+2), todosLosEnemigos=enemigos),enemigos,2,4)}) 
-		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = aceite), aceite,2,2)})
-		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(29),game.height()+2), todosLosEnemigos = llaves), llaves,3,3)})
+		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(2.randomUpTo(9),game.height()), todosLosEnemigos=enemigos),enemigos,1,0)}) 
+		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(9),game.height()), todosLosEnemigos = aceite), aceite,0,0)})
+		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(9),game.height()), todosLosEnemigos = llaves), llaves,0,0)})
 		
 	}
 	method agregarBordesDeRuta(){
 		self.crearParedIzquierda()
 		self.crearParedDerecha()
 		pared.forEach({unaPared => game.addVisual(unaPared)})
-		game.onTick(80,"paredes reiniciado",{pared.forEach{unaPared => unaPared.subir()}})
+		game.onTick(30,"paredes reiniciado",{pared.forEach{unaPared => unaPared.subir()}})
 	}
 	
 	method etapaFinal(){
@@ -140,8 +135,8 @@ object juego{
 	method accionesTanque(){					
 		game.addVisual(tanque) 
 		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
-		game.onTick(100,"accion tanque",{tanque.mover() tanque.disparar()})
-		self.crearBloques(8,14,tanque)
+		game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
+		self.crearBloques(2,1,tanque)
 	}
 	//method sumarSegundos() {
 	//	segundos+=1

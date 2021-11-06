@@ -31,7 +31,7 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	}
 	
 	method desaparece(){
-		if(self.position().y() <= -3 or self.position().y() >= game.height()+6){
+		if(self.position().y() <= -3 or self.position().y() >= game.height()+3){
 			self.removerObjeto()
 			puntaje.sumarPuntos(valorXDesaparecer)
 			
@@ -68,10 +68,10 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 	method desplazamientoAleatorio(unAuto){
 		const desplazamiento = 1.randomUpTo(10).truncate(0)
 		if(desplazamiento.even()){
-			unAuto.horizontal(3)
+			unAuto.horizontal(1)
 		}
 		else{
-			unAuto.horizontal(-3)
+			unAuto.horizontal(-1)
 		}
 		
 	}
