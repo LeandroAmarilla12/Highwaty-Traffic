@@ -6,7 +6,7 @@ import juegoYConfiguraciones.*
 
 
 class ElementoMovil{
-	var property position 
+	var property position
 	
 	method caer(){
 		position = self.position().down(1)
@@ -16,8 +16,9 @@ class ElementoMovil{
 
 class ObjetoEnLaPista inherits ElementoMovil{
 	var imagen 
-	var valorXDesaparecer 
+	var property valorXDesaparecer 
 	var estoyVivo=true
+	var property soyAutoAmarillo=false
 	
 	const coleccion = [] 
 	const property bloques =[]
@@ -27,24 +28,22 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	override method caer(){
 		super()
 		self.desaparece()
-		bloques.forEach({bloque=>bloque.position(bloque.position().down(1))})
+		//bloques.forEach({bloque=>bloque.position(bloque.position().down(1))})
 	}
 	
 	method desaparece(){
 		if(self.position().y() <= -3 or self.position().y() >= game.height()+3){
 			self.removerObjeto()
-			puntaje.sumarPuntos(valorXDesaparecer)
+			
 			
 		}
 	}
 	
 	method removerObjeto(){
-		if(estoyVivo){
-			game.removeVisual(self)
-			coleccion.remove(self)
-			bloques.forEach({bloque=>game.removeVisual(bloque)})
-			estoyVivo=false
-		}
+		game.removeVisual(self)
+		coleccion.remove(self)
+		estoyVivo=false
+		puntaje.sumarPuntos(valorXDesaparecer)
 	}
 	
 	method choqueConTanque(){
@@ -54,6 +53,8 @@ class ObjetoEnLaPista inherits ElementoMovil{
 	method choqueConPlayer(){
 		self.removerObjeto()	
 	}	
+	
+	method choqueConAutoAmarillo(algo){}
 }
 
 class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesaparecer = 0){	
@@ -61,6 +62,14 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 //		 
 //	}
 	
+	override method choqueConAutoAmarillo(algo){
+		if(1.randomUpTo(10).truncate(0).even()){
+			algo.position(algo.position().right(1))
+		}
+		else{
+			algo.position(algo.position().left(1))
+		}
+	}
 	override method choqueConPlayer(){
 		self.desplazamientoAleatorio(auto)
 	}
@@ -105,7 +114,7 @@ class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 	}
 class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
 	override method choqueConTanque(){
-		tanque.vida(tanque.vida()-1)
+		tanque.recibirDanio()
 		super()
 	}
 	override method caer(){
@@ -115,13 +124,20 @@ class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 	override method choqueConPlayer(){
 	}
 	
+	override method choqueConAutoAmarillo(algo){
+		algo.valorXDesaparecer(20)
+		algo.removerObjeto()
+		self.removerObjeto() 
+		
+	}
+	
+	
 }
 
 class BloqueInvisible{
 	var property position
-	const duenio
-	method soyPlayer() = false
-	//method image() = "pixel.png"
+	const property duenio
+	method image() = "pixel.png"
 	
 	method chocarCon(algo){
 		//duenio.chocarCon(algo)
@@ -134,4 +150,15 @@ class BloqueInvisible{
 	method choqueConTanque(){
 		duenio.choqueConTanque()	
 	}
+	method soyPlayer(){duenio.soyPlayer()}
+	method soyAutoAmarillo(){duenio.soyAutoAmarillo()}
+}
+
+class BloqueInvisibleDePlayer inherits BloqueInvisible{
+}
+
+class BloqueInvisibleDeTanque inherits BloqueInvisible{
+}
+
+class BloqueInvisibleDeEnemigo inherits BloqueInvisible{
 }

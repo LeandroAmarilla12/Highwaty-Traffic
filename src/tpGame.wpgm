@@ -11,4 +11,3 @@ program SpyHunter {
 //	START
 	game.start() 	
 }
-

@@ -8,7 +8,7 @@ object pista inherits ElementoMovil(position = game.at(1,0)){
 
 	method image() = "pista.png"
 		
-	
+	method choqueConPlayer(){}
 	method mover(){
 		if(self.position().distance(initialPosition)==6){
 			self.position(initialPosition)
@@ -16,36 +16,31 @@ object pista inherits ElementoMovil(position = game.at(1,0)){
 		else{self.caer()}
 	}
 }
-class Pared inherits ElementoMovil{
+class ParedHorizontal{
+	
+	var property position
 	
 	const valor = 0
 
 	method soyPlayer() = false
 	
-	
-	
 	method choqueConPlayer(){
 		auto.horizontal(valor)
 	}
-	
-	method subir(){
-		if(self.position().y()<= -2){
-			self.position(game.at(self.position().x(),game.height()+1))
-		}
-		else{self.caer()}
+	method choqueConAutoAmarillo(algo){
+		algo.position(algo.position().right(valor))
 	}
-
 					
 }
 
-class ParedIzquierda inherits Pared(valor = 1){	
-	
-	method image() =  "barreraIzquierda.png"
-}
 
-class ParedDerecha inherits Pared(valor = -1){
+class ParedVertical inherits ParedHorizontal{
 	
-	method image() =  "barreraDerecha.png"
+	override method choqueConPlayer(){
+		auto.vertical(valor)
+	}
+	override method choqueConAutoAmarillo(algo){
+	}
 	
 }
 

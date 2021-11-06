@@ -20,7 +20,7 @@ describe "test"{
 	}
 	method accion2(){
 		const bala = new BalaDePlayer(position = game.at(0,0) , coleccion = juego.balasDePlayer())
-		juego.crearBloques(3, 3, bala)
+		//juego.crearBloques(3, 3, bala)
 		game.addVisual(bala)
 		tanque.chocarCon(bala.bloques().first())
 	}
