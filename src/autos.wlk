@@ -9,21 +9,8 @@ object auto{
 	var property position = game.at(3,3)
 	//var posicionAux = self.position()
 	var property image = "player.png"
-	var property cancelarDisparo = 5
+	var property balas = 10  
 	const property bloques =[]
-	/* 
-	method crearBloques(){
-		self.crearALaIzquierda(2, 3)
-		bloques.forEach({bloque=>game.addVisual(bloque)})
-	}
-	method crearALaIzquierda(cuantosIzquierda, cuantosAbajo){
-			cuantosIzquierda.times({i=>self.crearAbajo(cuantosAbajo)})
-		}
-		
-	method crearAbajo(cuantosAbajo){
-		cuantosAbajo.times({i=>bloques.add(new BloqueInvisible(position=posicionAux.up(i)))})
-		posicionAux=posicionAux.right(1)
-	}*/
 	
 	method vertical(sentido){
 		self.position(self.position().up(sentido))
@@ -49,10 +36,12 @@ object auto{
 	method choqueConPlayer(){}
 	
 	method disparar(){
-		if(cancelarDisparo>0){
-			juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(1) , todosLosEnemigos = juego.balasDePlayer()), juego.balasDePlayer(),3,3)
-			self.cancelarDisparo(self.cancelarDisparo()-1)
+	
+		if(balas>0){
+			juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(1) , coleccion = juego.balasDePlayer()), juego.balasDePlayer(),0,0)
+			balas-=1
 		}
+		else {game.say(self, "Encontrá municiones!!") }
 	}
 	
 }
@@ -83,12 +72,12 @@ object tanque{
 	method mover(){
 		self.position(self.position().right(valor))
 		bloques.forEach({bloque=>bloque.position(bloque.position().right(valor))})
-		if (self.position().x()<=2 or self.position().x()>=5){
+		if (self.position().x()<=1 or self.position().x()>=7){
 			valor = valor*-1
 		}
 	}
 	method disparar(){
-		if(1.randomUpTo(20)>10) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(1).down(1) , todosLosEnemigos = juego.balasDeTanque()), juego.balasDeTanque(),0,0)
+		if(1.randomUpTo(20)>10) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().right(1).down(1) , coleccion = juego.balasDeTanque()), juego.balasDeTanque(),0,0)
 	}
 }
 
