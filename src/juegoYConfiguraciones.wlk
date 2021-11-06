@@ -54,14 +54,6 @@ object juego{
 		self.etapaFinal()
 	}
 	
-	method configurarTablero(){
-		game.title("TP")
-		game.height(60)
-		game.width(60)
-		game.ground("mapita.png")
-		game.cellSize(10)
-	}
-	
 	method agregarPlayer(){
 		game.addVisual(auto)
 		game.onCollideDo(auto, {algo => auto.chocarCon(algo)})
@@ -91,7 +83,7 @@ object juego{
 	}
 	
 	method todosLosObjetos(){
-		return enemigos + aceite + balasDeTanque + balasDePlayer + llaves
+		return enemigos + aceite + balasDeTanque + balasDePlayer + llaves + municiones
 	}
 	
 	method aparecerEnemigo(algo, coleccion,izq,arriba){ 
@@ -115,7 +107,7 @@ object juego{
 		game.onTick(3000,"Crear enemigo auto amarillo", {self.aparecerEnemigo(new AutoAmarillo(position = game.at(2.randomUpTo(9),game.height()), coleccion=enemigos),enemigos,1,0)}) 
 		game.onTick(6000,"Crear nueva mancha de aceite", {self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(9),game.height()), coleccion = aceite), aceite,0,0)})
 		game.onTick(20000,"Crear nueva llave reparadora", {self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(9),game.height()), coleccion = llaves), llaves,0,0)})
-		game.onTick(30000,"Crear nueva municion", {self.aparecerEnemigo(new Municion(position = game.at(2.randomUpTo(9),game.height()), coleccion = municiones), municiones,0,0)})
+		game.onTick(5000,"Crear nueva municion", {self.aparecerEnemigo(new Municion(position = game.at(2.randomUpTo(9),game.height()), coleccion = municiones), municiones,0,0)})
 		
 	}
 	method agregarBordesDeRuta(){

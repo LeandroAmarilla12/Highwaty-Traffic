@@ -121,7 +121,7 @@ class BloqueInvisible{
 	var property position
 	const duenio
 	method soyPlayer() = false
-	method image() = "pixel.png"
+	//method image() = "pixel.png"
 	
 	method chocarCon(algo){
 		//duenio.chocarCon(algo)
