@@ -112,7 +112,7 @@ class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 	override method choqueConTanque(){}
 	
 	}
-class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
+class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaPlayer.png", valorXDesaparecer = 0){
 	override method choqueConTanque(){
 		tanque.recibirDanio()
 		super()
