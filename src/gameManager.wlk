@@ -22,6 +22,7 @@ object gameManager {
 	method perdio(){
 		game.clear()
 		self.limpiarJuego()
+		game.addVisual(perder)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
 	
@@ -39,11 +40,13 @@ object gameManager {
 	method gano() {
 		game.clear()
 		self.limpiarJuego()
+		game.addVisual(ganar)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
 	method creditos() {
 		game.clear()
 		self.limpiarJuego()
+		game.addVisual(creditos)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
 }
@@ -56,3 +59,23 @@ object menu {
 
 }
 
+object ganar {
+	
+	method image() = "win.png"
+
+	method position() = game.at(0, 0)
+}
+
+object perder {
+	
+	method image() = "gameOver.png"
+
+	method position() = game.at(0, 0)
+}
+
+object creditos {
+	
+	method image() = "credits.png"
+
+	method position() = game.at(0, 0)
+}
