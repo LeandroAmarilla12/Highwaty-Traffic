@@ -22,7 +22,6 @@ object juego{
 	
 	method iniciar(){
 		
-		//self.configurarTablero()
 		game.clear()
 		
 		game.addVisual(pista) // agrego primero para que este debajo de todo
