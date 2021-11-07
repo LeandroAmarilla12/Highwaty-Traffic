@@ -3,9 +3,8 @@ import autos.*
 import Fondo.*
 
 object puntaje{
-	var puntos = 0
+	var property puntos = 0
 	
-	method verPuntos() = puntos
 	method sumarPuntos(puntosSumados){
 		puntos+=puntosSumados
 	}
@@ -20,17 +19,17 @@ class Numero{
 }
 object centena inherits Numero{
 	var property position= game.at(10,10)
-	override method valor() = puntaje.verPuntos().div(100)
+	override method valor() = puntaje.puntos().div(100)
 	
 }
 object decena inherits Numero{
 	var property position= game.at(11,10)
-	override method valor() = (puntaje.verPuntos()-centena.valor()*100).div(10)
+	override method valor() = (puntaje.puntos()-centena.valor()*100).div(10)
 	
 }
 object unidad inherits Numero{
 	var property position= game.at(12,10)
-	override method valor() = (puntaje.verPuntos()-centena.valor()*100)-decena.valor()*10
+	override method valor() = (puntaje.puntos()-centena.valor()*100)-decena.valor()*10
 	
 }
 
