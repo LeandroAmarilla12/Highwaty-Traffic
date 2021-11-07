@@ -33,7 +33,6 @@ class ParedHorizontal{
 					
 }
 
-
 class ParedVertical inherits ParedHorizontal{
 	
 	override method choqueConPlayer(){

@@ -7,7 +7,6 @@ import pantallas.*
 
 program SpyHunter {
 	menu.iniciar()
-	
 //	START
 	game.start() 	
 }
