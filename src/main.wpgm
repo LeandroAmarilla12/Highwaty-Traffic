@@ -2,7 +2,7 @@ import wollok.game.*
 import Fondo.*
 import autos.*
 import juego.*
-import objetosEnLaPista.*
+import objetos.*
 import gameManager.*
 
 program SpyHunter {

@@ -2,12 +2,12 @@ import wollok.game.*
 import puntaje.*
 import Fondo.*
 import juego.*
-import objetosEnLaPista.*
+import objetos.*
 import gameManager.*
 
 
 object auto{
-	var property position = game.at(3,3)
+	var property position = game.at(5,2)
 	//var posicionAux = self.position()
 	var property image = "player.png"
 	var property balas = 10  
@@ -40,12 +40,20 @@ object auto{
 	method disparar(){
 	
 		if(balas>0){
-			juego.aparecerEnemigo(new BalaDePlayer(position = self.position().up(2) , coleccion = juego.balasDePlayer()), juego.balasDePlayer())
+			juego.disparar(new BalaDePlayer(position = self.position().up(2) , coleccion = juego.balasDePlayer()), juego.balasDePlayer())
 			balas-=1
 		}
 		else {game.say(self, "Encontrá municiones!!") }
 	}
 	
+}
+
+object vida{
+	var property cantidad = 10
+	
+	var property position = game.at(10,5)
+	
+	method image() =  "corazon"+cantidad.max(0)+".png"
 }
 
 class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparecer = 10 , soyAutoAmarillo=true){
@@ -64,9 +72,9 @@ class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesap
 		vida.cantidad(vida.cantidad()-1)
 		super()
 	}
-	method chocarCon(algo){
-		if(algo.soyPlayer()){/*nada*/}
-		else algo.choqueConAutoAmarillo(self)		
+	override method recibirBala(){
+		self.valorXDesaparecer(20)
+		self.removerObjeto()
 	}
 }
 
@@ -86,7 +94,7 @@ object tanque{
 	
 	method image() = "tanque.png"
 	method choqueConPlayer(){
-		//pantalla GAME OVER
+		gameManager.perdio()
 	}
 	method chocarCon(algo){
 		if(algo.soyPlayer()){/*nada*/}
@@ -105,6 +113,10 @@ object tanque{
 			valor = valor*-1
 		}
 	}
+	method recibirBala(){
+		self.recibirDanio()
+	}
+	
 	method disparar(){
 		if(1.randomUpTo(20)>10) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().down(1) , coleccion = juego.balasDeTanque()), juego.balasDeTanque())
 	}

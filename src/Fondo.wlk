@@ -1,7 +1,7 @@
 import wollok.game.*
 import autos.*
 import juego.*
-import objetosEnLaPista.*
+import objetos.*
 
 object pista inherits ElementoMovil(position = game.at(1,0)){
 	const initialPosition = game.at(1,0)
@@ -41,6 +41,7 @@ class ParedVertical inherits ParedHorizontal{
 	}
 	override method choqueConAutoAmarillo(algo){
 	}
+	method recibirBala(){}
 	
 }
 
@@ -49,10 +50,3 @@ class Corazon{
 	const property position
 }
 
-object vida{
-	var property cantidad = 1
-	
-	var property position = game.at(10,5)
-	
-	method image() =  "corazon"+cantidad.max(0)+".png"
-}

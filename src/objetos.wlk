@@ -54,7 +54,7 @@ class ObjetoEnLaPista inherits ElementoMovil{
 		self.removerObjeto()	
 	}	
 	
-	method choqueConAutoAmarillo(algo){}
+	method recibirBala(){}
 }
 
 class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesaparecer = 0){	
@@ -62,14 +62,7 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 //		 
 //	}
 	
-	override method choqueConAutoAmarillo(algo){
-		if(1.randomUpTo(10).truncate(0).even()){
-			algo.position(algo.position().right(1))
-		}
-		else{
-			algo.position(algo.position().left(1))
-		}
-	}
+	
 	override method choqueConPlayer(){
 		self.desplazamientoAleatorio(auto)
 	}
@@ -124,11 +117,9 @@ class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaPlayer.png", valorXDes
 	override method choqueConPlayer(){
 	}
 	
-	override method choqueConAutoAmarillo(algo){
-		algo.valorXDesaparecer(20)
-		algo.removerObjeto()
-		self.removerObjeto() 
-		
+	method leDiA(algo){
+		algo.recibirBala()
+		self.removerObjeto()
 	}
 	
 	
@@ -144,6 +135,9 @@ class BloqueInvisible{
 		algo.choqueConPlayer()
 	}
 	
+	method recibirBala(){
+		duenio.recibirBala()
+	}	
 	method choqueConPlayer(){
 		duenio.choqueConPlayer()	
 	}

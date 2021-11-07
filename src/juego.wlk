@@ -2,7 +2,7 @@ import wollok.game.*
 import autos.*
 import puntaje.*
 import Fondo.*
-import objetosEnLaPista.*
+import objetos.*
 import gameManager.*
 
 
@@ -16,9 +16,6 @@ object juego{
 	var property balasDePlayer = []
 	const property municiones = []
 	var property segundos = 0
-	
-	var posicionAux 
-	
 	
 	method iniciar(){
 		
@@ -83,7 +80,12 @@ object juego{
 			game.addVisual(enemy.bloque()) 
 			//game.onCollideDo(enemy,{colisionado => enemy.chocarCon(colisionado)})
 		}
-		//self.crearBloques(izq,arriba,algo)
+		
+	}
+	method disparar(bala, coleccion){ 
+		coleccion.add(bala)
+		game.addVisual(bala)
+		game.onCollideDo(bala, {algo => bala.leDiA(algo)})
 	}
 	
 	method crearParedes(){
@@ -109,8 +111,8 @@ object juego{
 	}
 	
 	method etapaFinal(){
-		game.schedule(30000, {self.prepararBatallaFinal()})
-		game.schedule(35000,{self.accionesTanque()})
+		game.schedule(10000, {self.prepararBatallaFinal()})
+		game.schedule(15000,{self.accionesTanque()})
 	}
 	
 	method prepararBatallaFinal(){
@@ -122,7 +124,7 @@ object juego{
 	method accionesTanque(){					
 		game.addVisual(tanque)
 		game.onCollideDo(tanque, {algo => tanque.chocarCon(algo)})
-		game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
+		//game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
 		tanque.crearBloques()
 	}
 	

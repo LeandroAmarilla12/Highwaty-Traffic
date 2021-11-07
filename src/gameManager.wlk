@@ -36,6 +36,8 @@ object gameManager {
 		juego.municiones().clear()
 		vida.cantidad(4)
 		puntaje.puntos(0)
+		auto.balas(10)
+		auto.position(game.at(5,2))
 	}
 	method gano() {
 		game.clear()
