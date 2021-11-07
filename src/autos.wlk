@@ -1,9 +1,9 @@
 import wollok.game.*
 import puntaje.*
 import Fondo.*
-import juegoYConfiguraciones.*
+import juego.*
 import objetosEnLaPista.*
-import pantallas.*
+import gameManager.*
 
 
 object auto{
@@ -32,7 +32,7 @@ object auto{
 	
 	method chocarCon(algo){
 		algo.choqueConPlayer()
-		if(vida.cantidad()<=0){gameOver.mostrarGameOver()}
+		if(vida.cantidad()<=0){gameManager.perdio()}
 	}
 	
 	method choqueConPlayer(){}
@@ -94,7 +94,7 @@ object tanque{
 	}
 	method recibirDanio(){
 		self.vida(self.vida()-1)
-		if(self.vida()<=0){/*pantallas.ganaste()*/}
+		if(self.vida()<=0){gameManager.gano()}
 	}
 	
 	method choqueConTanque(){}

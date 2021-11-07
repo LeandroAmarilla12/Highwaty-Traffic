@@ -3,7 +3,7 @@ import autos.*
 import puntaje.*
 import Fondo.*
 import objetosEnLaPista.*
-import pantallas.*
+import gameManager.*
 
 
 object juego{
@@ -22,7 +22,7 @@ object juego{
 	
 	method iniciar(){
 		
-		//self.configurarTablero()
+		game.clear()
 		
 		game.addVisual(pista) // agrego primero para que este debajo de todo
 	

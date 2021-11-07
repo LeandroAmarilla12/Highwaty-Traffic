@@ -1,12 +1,14 @@
 import wollok.game.*
 import Fondo.*
 import autos.*
-import juegoYConfiguraciones.*
+import juego.*
 import objetosEnLaPista.*
-import pantallas.*
+import gameManager.*
 
 program SpyHunter {
-	menu.iniciar()
+	gameManager.configurarTablero()
+	gameManager.mostrarMenu()
+	
 //	START
 	game.start() 	
 }

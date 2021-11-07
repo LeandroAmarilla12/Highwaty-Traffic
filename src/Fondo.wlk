@@ -1,6 +1,6 @@
 import wollok.game.*
 import autos.*
-import juegoYConfiguraciones.*
+import juego.*
 import objetosEnLaPista.*
 
 object pista inherits ElementoMovil(position = game.at(1,0)){
@@ -49,7 +49,7 @@ class Corazon{
 }
 
 object vida{
-	var property cantidad = 4
+	var property cantidad = 1
 	
 	var property position = game.at(10,5)
 	

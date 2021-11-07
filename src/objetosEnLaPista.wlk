@@ -2,7 +2,7 @@ import wollok.game.*
 import autos.*
 import puntaje.*
 import Fondo.*
-import juegoYConfiguraciones.*
+import juego.*
 
 
 class ElementoMovil{

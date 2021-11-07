@@ -1,4 +1,4 @@
-import juegoYConfiguraciones.*
+import juego.*
 import objetosEnLaPista.*
 import autos.*
 import Fondo.*
