@@ -52,7 +52,7 @@ class Corazon{
 object vida{
 	var property cantidad = 4
 	
-	var property position = game.at(45,55)
+	var property position = game.at(10,5)
 	
 	method image() =  "corazon"+cantidad.max(0)+".png"
 }

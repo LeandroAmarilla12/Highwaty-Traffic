@@ -3,7 +3,7 @@ import Fondo.*
 import autos.*
 import juegoYConfiguraciones.*
 import objetosEnLaPista.*
-import menus.*
+import pantallas.*
 
 program SpyHunter {
 	menu.iniciar()

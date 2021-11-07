@@ -3,6 +3,7 @@ import puntaje.*
 import Fondo.*
 import juegoYConfiguraciones.*
 import objetosEnLaPista.*
+import pantallas.*
 
 
 object auto{
@@ -31,6 +32,7 @@ object auto{
 	
 	method chocarCon(algo){
 		algo.choqueConPlayer()
+		if(vida.cantidad()<=0){gameOver.mostrarGameOver()}
 	}
 	
 	method choqueConPlayer(){}

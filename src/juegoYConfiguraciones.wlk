@@ -3,12 +3,13 @@ import autos.*
 import puntaje.*
 import Fondo.*
 import objetosEnLaPista.*
-import menus.*
+import pantallas.*
 
 
 object juego{
+	var batallaFinal=true
 	const property enemigos = []
-	const pared = []
+	const property pared = []
 	const property aceite =[]
 	const property llaves = []
 	var property balasDeTanque = []
@@ -20,8 +21,6 @@ object juego{
 	
 	
 	method iniciar(){
-		
-		game.removeVisual(menu)
 		
 		//self.configurarTablero()
 		
@@ -80,7 +79,10 @@ object juego{
 		const enemy = algo
 		coleccion.add(enemy)
 		game.addVisual(enemy)
-		if(algo.soyAutoAmarillo()){game.addVisual(algo.bloque())}
+		if(enemy.soyAutoAmarillo()){
+			game.addVisual(enemy.bloque()) 
+			//game.onCollideDo(enemy,{colisionado => enemy.chocarCon(colisionado)})
+		}
 		//self.crearBloques(izq,arriba,algo)
 	}
 	
@@ -107,14 +109,15 @@ object juego{
 	}
 	
 	method etapaFinal(){
-		game.schedule(30000, {self.removerAcciones()})
+		game.schedule(30000, {self.prepararBatallaFinal()})
 		game.schedule(35000,{self.accionesTanque()})
 	}
 	
-	method removerAcciones(){
+	method prepararBatallaFinal(){
 		game.removeTickEvent("Crear enemigo auto amarillo")
 		game.removeTickEvent("Crear nueva mancha de aceite")
 		game.removeTickEvent("Crear nueva llave reparadora")
+		batallaFinal=false
 	}
 	method accionesTanque(){					
 		game.addVisual(tanque)
@@ -122,5 +125,6 @@ object juego{
 		game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
 		tanque.crearBloques()
 	}
+	
 }
 
