@@ -48,6 +48,7 @@ class Corazon{
 	const property position
 }
 
+
 object vida{
 	var property cantidad = 1
 	
