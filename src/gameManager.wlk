@@ -15,6 +15,7 @@ object gameManager {
 	}
 
 	method mostrarMenu() {
+		puntaje.puntos(0)
 		if (!game.hasVisual(menu)) game.addVisual(menu)
 		game.schedule(1, { cancion.pausar()})
 		game.schedule(2, { cancion.reproducir(0.5)})
@@ -29,6 +30,7 @@ object gameManager {
 		self.pausarSonidos()
 		self.limpiarJuego()
 		game.addVisual(perder)
+		self.mostrarPuntos()
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
 
@@ -41,7 +43,7 @@ object gameManager {
 		juego.balasDePlayer().clear()
 		juego.municiones().clear()
 		vida.cantidad(4)
-		puntaje.puntos(0)
+		//puntaje.puntos(0)
 		auto.balas(10)
 		auto.position(game.at(5, 2))
 		auto.bloque().position(game.at(5, 3))
@@ -52,6 +54,7 @@ object gameManager {
 		self.limpiarJuego()
 		game.clear()
 		self.pausarSonidos()
+		self.mostrarPuntos()
 		game.addVisual(ganar)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
@@ -73,6 +76,16 @@ object gameManager {
 	method pausarSonidos() {
 		cancion.pausar()
 		motor.pausar()
+	}
+	
+	
+	method mostrarPuntos() {
+		game.addVisual(centena)
+		centena.position(game.at(6,2))
+		game.addVisual(decena)
+		decena.position(game.at(7,2))
+		game.addVisual(unidad)
+		unidad.position(game.at(8,2))
 	}
 
 }

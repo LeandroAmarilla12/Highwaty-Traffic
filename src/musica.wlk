@@ -1,6 +1,6 @@
 import wollok.game.*
 
-class sonidosEnLoop {
+class SonidosEnLoop {
 
 	var audio
 
@@ -20,18 +20,18 @@ class sonidosEnLoop {
 
 }
 
-object cancion inherits sonidosEnLoop(audio = game.sound("Spyhunter.wav")) {
+object cancion inherits SonidosEnLoop(audio = game.sound("Spyhunter.wav")) {
 
 }
 
-object motor inherits sonidosEnLoop(audio = game.sound("motorAuto.wav")) {
+object motor inherits SonidosEnLoop(audio = game.sound("motorAuto.wav")) {
 
 }
 
 object sonido {
 
 	method reproducir(sonido, volumen) {
-		var audio = game.sound(sonido)
+		const audio = game.sound(sonido)
 		audio.volume(volumen)
 		audio.play()
 	}

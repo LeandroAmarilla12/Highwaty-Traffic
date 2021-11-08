@@ -61,8 +61,11 @@ object juego {
 
 	method agregarPuntaje() {
 		game.addVisual(centena)
+		centena.position(game.at(11,8))
 		game.addVisual(decena)
+		decena.position(game.at(12,8))
 		game.addVisual(unidad)
+		unidad.position(game.at(13,8))
 	}
 
 	method crearEnemigos() {
