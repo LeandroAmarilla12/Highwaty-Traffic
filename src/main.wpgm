@@ -2,6 +2,7 @@ import wollok.game.*
 import gameManager.*
 
 program HighwayTraffic {
+	
 	gameManager.configurarTablero()
 	gameManager.mostrarMenu()
 //	START
