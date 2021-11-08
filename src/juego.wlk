@@ -4,6 +4,7 @@ import puntaje.*
 import Fondo.*
 import objetos.*
 import gameManager.*
+import musica.*
 
 object juego {
 
@@ -19,7 +20,7 @@ object juego {
 
 	method iniciar() {
 		game.clear()
-		game.addVisual(fondo) // agrego primero para que este debajo de todo
+		self.prepararFondo()
 		self.agregarBordesDeRuta()
 		self.agregarPlayer()
 		self.agregarPuntaje()
@@ -28,6 +29,12 @@ object juego {
 		game.onTick(100, "objetos cayendo", { self.objetosQueCaen()}) // hacer caer objetos
 			// Tanque
 		self.etapaFinal()
+	}
+
+	method prepararFondo() {
+		game.addVisual(fondo)
+		game.addVisual(cartel)
+		game.addVisual(cantidadBala)
 	}
 
 	method agregarBordesDeRuta() {
@@ -42,6 +49,9 @@ object juego {
 		self.movimientoAuto()
 		game.addVisual(auto.bloque())
 		game.onCollideDo(auto.bloque(), { algo => auto.chocarCon(algo)})
+		motor.reproducir(0.3)
+		
+		
 	}
 
 	method movimientoAuto() {
@@ -58,7 +68,7 @@ object juego {
 	}
 
 	method crearEnemigos() {
-		game.onTick(1000, "Crear enemigo auto amarillo", { self.aparecerEnemigo(new AutoAmarillo(position = game.at(2.randomUpTo(9), game.height()), coleccion = enemigos), enemigos)})
+		game.onTick(1000, "Crear enemigo auto amarillo", { self.aparecerEnemigo(new AutoAmarillo(position = game.at(2.randomUpTo(9), game.height()), coleccion = enemigos), enemigos) })
 		game.onTick(6000, "Crear nueva mancha de aceite", { self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(9), game.height()), coleccion = aceite), aceite)})
 		game.onTick(15000, "Crear nueva llave reparadora", { self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = llaves), llaves)})
 		game.onTick(30000, "Crear nueva municion", { self.aparecerEnemigo(new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = municiones), municiones)})
@@ -86,7 +96,7 @@ object juego {
 		(game.height() + 2).times({ i => pared.add(new ParedHorizontal(position = game.at(1, i - 1), valor = 1))})
 		(game.height() + 2).times({ i => pared.add(new ParedHorizontal(position = game.at(10, i - 1), valor = -1))})
 		(8).times({ i => pared.add(new ParedVertical(position = game.at(i, 12), valor = -1))})
-		(8).times({ i => pared.add(new ParedVertical(position = game.at(i, -1), valor = 1))})	
+		(8).times({ i => pared.add(new ParedVertical(position = game.at(i, -1), valor = 1))})
 	}
 
 	method etapaFinal() {
@@ -104,7 +114,9 @@ object juego {
 	method accionesTanque() {
 		game.addVisual(tanque)
 		game.onCollideDo(tanque, { algo => tanque.chocarCon(algo)})
-		game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
+		game.onTick(300, "accion tanque", { tanque.mover()
+			tanque.disparar()
+		})
 		tanque.crearBloques()
 	}
 

@@ -4,6 +4,7 @@ import Fondo.*
 import juego.*
 import objetos.*
 import gameManager.*
+import musica.*
 
 object auto {
 
@@ -45,6 +46,7 @@ object auto {
 		if (balas > 0) {
 			self.crearBala(new BalaDePlayer(position = self.position().up(2), coleccion = juego.balasDePlayer()), juego.balasDePlayer())
 			balas -= 1
+			sonido.reproducir("balaAuto.wav",1)
 		} else {
 			game.say(self, "Encontrá municiones!!")
 		}
@@ -85,19 +87,27 @@ class AutoAmarillo inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesap
 		vida.cantidad(vida.cantidad() - 1)
 		valorXDesaparecer = 0
 		super()
+		self.explocion(self.position())
 	}
 
 	override method recibirBala(unaBala) {
 		self.valorXDesaparecer(50)
 		self.removerObjeto()
 		unaBala.removerObjeto()
-		self.explotar(self.position())
+		self.explocion(self.position())
+		self.bonif(self.position())
 	}
-	method explotar(posicion) {
-		const bonificacion = new Mas50(position = posicion, imagen = "+50.png", valorXDesaparecer = 0)
-		const bonificacion = new Explosion(position = posicion, imagen = "+50.png", valorXDesaparecer = 0)
+
+	method explocion(posicion) {
+		const explocion = new Explosion(position = posicion, imagen = "explosion.png", valorXDesaparecer = 0)
+		game.addVisual(explocion)
+		game.schedule(300, { game.removeVisual(explocion)})
+	}
+
+	method bonif(posicion) {
+		const bonificacion = new Mas50(position = posicion, imagen = "+25.png", valorXDesaparecer = 0)
 		game.addVisual(bonificacion)
-		game.schedule(1000, { game.removeVisual(bonificacion)})
+		game.schedule(700, { game.removeVisual(bonificacion)})
 	}
 
 }
@@ -147,12 +157,17 @@ object tanque {
 	}
 
 	method recibirBala(unaBala) {
-		self.recibirDanio()
 		unaBala.removerObjeto()
+		self.recibirDanio()
+		
 	}
 
 	method disparar() {
-		if (1.randomUpTo(20) > 10) juego.aparecerEnemigo(new BalaDeTanque(position = self.position().down(1), coleccion = juego.balasDeTanque()), juego.balasDeTanque())
+		if (1.randomUpTo(20) > 10) {
+			juego.aparecerEnemigo(new BalaDeTanque(position = self.position().down(1), coleccion = juego.balasDeTanque()), juego.balasDeTanque())
+			sonido.reproducir("balaTanque.wav",1)
+		}
+	
 	}
 
 }

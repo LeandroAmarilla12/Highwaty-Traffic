@@ -22,6 +22,18 @@ object fondo inherits ElementoMovil(position = game.at(0, 0)) {
 
 }
 
+object cartel{
+	method position() = game.at(10, 7)
+
+	method image() = "cartelVacio.png"
+}
+
+object cantidadBala{
+	method position() = game.at(12,9)
+	
+	method image() = ""+auto.balas()+".png"
+}
+
 class ParedHorizontal {
 
 	var property position

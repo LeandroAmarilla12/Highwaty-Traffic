@@ -39,8 +39,8 @@ class ObjetoEnLaPista inherits ElementoMovil {
 	}
 
 	method removerObjeto() {
-		game.removeVisual(self)
 		coleccion.remove(self)
+		game.removeVisual(self)
 		estoyVivo = false
 		puntaje.sumarPuntos(valorXDesaparecer)
 	}
