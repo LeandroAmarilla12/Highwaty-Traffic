@@ -7,7 +7,7 @@ object puntaje {
 	var property puntos = 0
 
 	method sumarPuntos(puntosSumados) {
-		puntos += puntosSumados
+		puntos = (puntos + puntosSumados).max(0)
 	}
 
 }

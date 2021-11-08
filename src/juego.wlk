@@ -49,14 +49,8 @@ object juego {
 		self.movimientoAuto()
 		game.addVisual(auto.bloque())
 		game.onCollideDo(auto.bloque(), { algo => auto.chocarCon(algo)})
-/* <<<<<<< HEAD
-		audio.reproducir()
-=======
-		motor.reproducir(0.3)
-		
-		
->>>>>>> branch 'master' of git@github.com:algo1unsam/tpgame-los-perris.git
-	*/}
+		motor.reproducir(0.3)		
+}
 
 	method movimientoAuto() {
 		keyboard.up().onPressDo{ auto.vertical(1)}

@@ -5,6 +5,8 @@ import Fondo.*
 import wollok.game.*
 
 
+
+
 describe "Colisiones del jugador con objetos"{
 	method initialize(){
 		game.addVisual(auto)
@@ -39,12 +41,12 @@ describe "Colisiones del jugador con objetos"{
 	}
 	
 	test "Jugador con poca vida, se cura colisionando con kit de reparacion y este se destruye"{
-		vida(2)
+		vida.cantidad(2)
 		const reparador = new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.llaves())
 		juego.aparecerEnemigo(reparador, juego.llaves())
 		auto.chocarCon(reparador)
 		assert.equals(4,vida.cantidad())
-		///assert.that(juego.llaves().contains(reparador))
+		assert.notThat(juego.llaves().contains(reparador))
 	}
 	
 	test "Jugador con vida completa, colsiona con kit y sigue con la vida igual y no se destruye el kit"{
@@ -55,6 +57,13 @@ describe "Colisiones del jugador con objetos"{
 		assert.that(juego.llaves().contains(reparador))
 	}
 	
+	test "Recibir balas de Tanque dañan quitan la mitad de vida"{
+		const balaDeTanque = new BalaDeTanque(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.balasDeTanque())
+		juego.aparecerEnemigo(balaDeTanque, juego.balasDeTanque()) 
+		auto.bloque().chocarCon(balaDeTanque)
+		assert.equals(2,vida.cantidad())
+		assert.notThat(juego.balasDeTanque().contains(balaDeTanque))	
+	}
 	
 }
 
@@ -91,7 +100,7 @@ describe "Colisiones de Autos Azules"{
 
 
 
-describe "Balas colisionan y dañan tanque" {
+describe "Colisiones Del Tanque" {
 	method initialize(){
 		tanque.crearBloques()
 	}
@@ -119,6 +128,6 @@ describe "Balas colisionan y dañan tanque" {
 		5.times({ i => self.balaImpactaBloqueInvisibleDeTanque()})
 		assert.equals(5, tanque.vida())
 	}
-
+	
 }
 

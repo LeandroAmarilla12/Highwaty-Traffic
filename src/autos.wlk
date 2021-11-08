@@ -80,7 +80,7 @@ object vida {
 
 }
 
-class AutoAzul inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparecer = 10, soyAutoAzul = true) {
+class AutoAzul inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparecer = 5, soyAutoAzul = true) {
 
 	const property bloque = new BloqueInvisible(position = self.position().up(1), duenio = self)
 
@@ -96,7 +96,7 @@ class AutoAzul inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparec
 
 	override method choqueConPlayer() {
 		vida.cantidad(vida.cantidad() - 1)
-		valorXDesaparecer = 0
+		valorXDesaparecer = -10
 		super()
 		self.explocion(self.position())
 	}
