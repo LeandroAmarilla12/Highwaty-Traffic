@@ -2,35 +2,47 @@ import wollok.game.*
 import autos.*
 import Fondo.*
 
-object puntaje{
+object puntaje {
+
 	var property puntos = 0
-	
-	method sumarPuntos(puntosSumados){
-		puntos+=puntosSumados
+
+	method sumarPuntos(puntosSumados) {
+		puntos += puntosSumados
 	}
+
 }
 
+class Numero {
 
-class Numero{
 	method valor()
-	method image(){
-		return self.valor().stringValue()+".png"
+
+	method image() {
+		return self.valor().stringValue() + ".png"
 	}
-}
-object centena inherits Numero{
-	var property position= game.at(10,10)
-	override method valor() = puntaje.puntos().div(100)
-	
-}
-object decena inherits Numero{
-	var property position= game.at(11,10)
-	override method valor() = (puntaje.puntos()-centena.valor()*100).div(10)
-	
-}
-object unidad inherits Numero{
-	var property position= game.at(12,10)
-	override method valor() = (puntaje.puntos()-centena.valor()*100)-decena.valor()*10
-	
+
 }
 
+object centena inherits Numero {
+
+	var property position = game.at(11, 9)
+
+	override method valor() = puntaje.puntos().div(100)
+
+}
+
+object decena inherits Numero {
+
+	var property position = game.at(12, 9)
+
+	override method valor() = (puntaje.puntos() - centena.valor() * 100).div(10)
+
+}
+
+object unidad inherits Numero {
+
+	var property position = game.at(13, 9)
+
+	override method valor() = (puntaje.puntos() - centena.valor() * 100) - decena.valor() * 10
+
+}
 

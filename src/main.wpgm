@@ -5,10 +5,9 @@ import juego.*
 import objetos.*
 import gameManager.*
 
-program SpyHunter {
+program HighwayTraffic {
 	gameManager.configurarTablero()
 	gameManager.mostrarMenu()
-	
 //	START
-	game.start() 	
+	game.start()
 }

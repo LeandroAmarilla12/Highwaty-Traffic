@@ -4,155 +4,180 @@ import puntaje.*
 import Fondo.*
 import juego.*
 
+class ElementoMovil {
 
-class ElementoMovil{
 	var property position
-	
-	method caer(){
+
+	method caer() {
 		position = self.position().down(1)
 	}
-	
+
 }
 
-class ObjetoEnLaPista inherits ElementoMovil{
-	var imagen 
-	var property valorXDesaparecer 
-	var estoyVivo=true
-	var property soyAutoAmarillo=false
-	
-	const coleccion = [] 
-	const property bloques =[]
+class ObjetoEnLaPista inherits ElementoMovil {
+
+	var imagen
+	var property valorXDesaparecer
+	var estoyVivo = true
+	var property soyAutoAmarillo = false
+	const coleccion = []
+	const property bloques = []
+
 	method soyPlayer() = false
+
 	method image() = imagen
-	
-	override method caer(){
+
+	override method caer() {
 		super()
 		self.desaparece()
-		//bloques.forEach({bloque=>bloque.position(bloque.position().down(1))})
 	}
-	
-	method desaparece(){
-		if(self.position().y() <= -3 or self.position().y() >= game.height()+3){
+
+	method desaparece() {
+		if (self.position().y() <= -3 or self.position().y() >= game.height() + 3) {
 			self.removerObjeto()
-			
-			
 		}
 	}
-	
-	method removerObjeto(){
+
+	method removerObjeto() {
 		game.removeVisual(self)
 		coleccion.remove(self)
-		estoyVivo=false
+		estoyVivo = false
 		puntaje.sumarPuntos(valorXDesaparecer)
 	}
-	
-	method choqueConTanque(){
+
+	method choqueConTanque() {
 		self.removerObjeto()
 	}
-	
-	method choqueConPlayer(){
-		self.removerObjeto()	
-	}	
-	
-	method recibirBala(){}
+
+	method choqueConPlayer() {
+		self.removerObjeto()
+	}
+
+	method recibirBala(unaBala) {
+	}
+
 }
 
-class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesaparecer = 0){	
+class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesaparecer = 0) {
+
 //	override method chocarCon(unAuto){
 //		 
 //	}
-	
-	
-	override method choqueConPlayer(){
+	override method choqueConPlayer() {
 		self.desplazamientoAleatorio(auto)
 	}
-	
-	method desplazamientoAleatorio(unAuto){
+
+	method desplazamientoAleatorio(unAuto) {
 		const desplazamiento = 1.randomUpTo(10).truncate(0)
-		if(desplazamiento.even()){
+		if (desplazamiento.even()) {
 			unAuto.horizontal(1)
-		}
-		else{
+		} else {
 			unAuto.horizontal(-1)
 		}
-		
 	}
+
 }
 
-class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer = 0){
-	override method choqueConPlayer(){
-		if (vida.cantidad() < 4){			
+class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer = 0) {
+
+	override method choqueConPlayer() {
+		if (vida.cantidad() < 4) {
 			vida.cantidad(4)
 			super()
 		}
-	}	
+	}
+
 }
 
-class Municion inherits ObjetoEnLaPista(imagen = "municiones.png", valorXDesaparecer = 0){
-	override method choqueConPlayer(){
-		if (auto.balas() == 0){			
+class Municion inherits ObjetoEnLaPista(imagen = "municiones.png", valorXDesaparecer = 0) {
+
+	override method choqueConPlayer() {
+		if (auto.balas() == 0) {
 			auto.balas(10)
 			super()
-		}
-	}	
+		} else game.say(auto, "Ya tengo balas")
+	}
+
 }
 
-class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0){
-	override method choqueConPlayer(){
-		vida.cantidad(vida.cantidad()-2)
+class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0) {
+
+	override method choqueConPlayer() {
+		vida.cantidad(vida.cantidad() - 2)
 		super()
 	}
-	override method choqueConTanque(){}
-	
+
+	override method choqueConTanque() {
 	}
-class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaPlayer.png", valorXDesaparecer = 0){
-	override method choqueConTanque(){
+
+}
+
+class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaPlayer.png", valorXDesaparecer = 0) {
+
+	override method image() = "llama0.png"
+
+	override method choqueConTanque() {
 		tanque.recibirDanio()
 		super()
 	}
-	override method caer(){
+
+	override method caer() {
 		position = self.position().up(1)
-		self.desaparece() 
+		self.desaparece()
 	}
-	override method choqueConPlayer(){
+
+	override method choqueConPlayer() {
 	}
-	
-	method leDiA(algo){
-		algo.recibirBala()
-		self.removerObjeto()
+
+	method leDiA(algo) {
+		algo.recibirBala(self)
 	}
-	
-	
+
 }
 
-class BloqueInvisible{
+class BloqueInvisible {
+
 	var property position
 	const property duenio
-	method image() = "pixel.png"
-	
-	method chocarCon(algo){
-		//duenio.chocarCon(algo)
+
+	// method image() = "pixel.png"
+	method chocarCon(algo) {
 		algo.choqueConPlayer()
 	}
-	
-	method recibirBala(){
-		duenio.recibirBala()
-	}	
-	method choqueConPlayer(){
-		duenio.choqueConPlayer()	
+
+	method recibirBala(unaBala) {
+		duenio.recibirBala(unaBala)
 	}
-	method choqueConTanque(){
-		duenio.choqueConTanque()	
+
+	method choqueConPlayer() {
+		duenio.choqueConPlayer()
 	}
-	method soyPlayer(){duenio.soyPlayer()}
-	method soyAutoAmarillo(){duenio.soyAutoAmarillo()}
+
+	method choqueConTanque() {
+		duenio.choqueConTanque()
+	}
+
+	method soyPlayer() {
+		duenio.soyPlayer()
+	}
+
+	method soyAutoAmarillo() {
+		duenio.soyAutoAmarillo()
+	}
+
 }
 
-class BloqueInvisibleDePlayer inherits BloqueInvisible{
+class Mas50 inherits ObjetoEnLaPista {
+
+	override method choqueConPlayer() {
+	}
+
 }
 
-class BloqueInvisibleDeTanque inherits BloqueInvisible{
+class Explosion inherits objetos.ObjetoEnLaPista {
+
+	override method choqueConPlayer() {
+	}
+
 }
 
-class BloqueInvisibleDeEnemigo inherits BloqueInvisible{
-}

@@ -12,29 +12,31 @@ import wollok.game.*
 //	assert.equals(1,(coleccion.asSet()).sizes())
 //
 //}
-describe "test"{
-	
-	method accion(){
+describe "test" {
+
+	method accion() {
 		auto.disparar()
 		tanque.chocarCon(juego.balasDePlayer().first())
 	}
-	method accion2(){
-		const bala = new BalaDePlayer(position = game.at(0,0) , coleccion = juego.balasDePlayer())
-		//juego.crearBloques(3, 3, bala)
+
+	method accion2() {
+		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
+			// juego.crearBloques(3, 3, bala)
 		game.addVisual(bala)
 		tanque.chocarCon(bala.bloques().first())
 	}
-	
-	test "tanque tiene 5 de vida al recibir disparo 5 veces"{
-		assert.equals(10,tanque.vida())
-		5.times({i=>self.accion()})
-		assert.equals(5,tanque.vida())
+
+	test "tanque tiene 5 de vida al recibir disparo 5 veces" {
+		assert.equals(10, tanque.vida())
+		5.times({ i => self.accion()})
+		assert.equals(5, tanque.vida())
 	}
-	
-	test "tanque tiene 5 de vida al recibir disparo 5 veces en los bloques invisibles"{
-		assert.equals(10,tanque.vida())
-		5.times({i=>self.accion2()})
-		assert.equals(5,tanque.vida())
+
+	test "tanque tiene 5 de vida al recibir disparo 5 veces en los bloques invisibles" {
+		assert.equals(10, tanque.vida())
+		5.times({ i => self.accion2()})
+		assert.equals(5, tanque.vida())
 	}
-	
+
 }
+
