@@ -42,6 +42,7 @@ object juego {
 		self.movimientoAuto()
 		game.addVisual(auto.bloque())
 		game.onCollideDo(auto.bloque(), { algo => auto.chocarCon(algo)})
+		audio.reproducir()
 	}
 
 	method movimientoAuto() {

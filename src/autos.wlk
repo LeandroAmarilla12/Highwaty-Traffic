@@ -5,6 +5,17 @@ import juego.*
 import objetos.*
 import gameManager.*
 
+object audio{
+	const audio = game.sound("motorAuto.wav")
+	
+	
+	
+	method reproducir(){
+		audio.shouldLoop(true) 
+		audio.play()
+	}
+}
+
 object auto {
 
 	var property position = game.at(5, 2)
