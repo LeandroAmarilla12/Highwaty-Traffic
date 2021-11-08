@@ -19,7 +19,7 @@ class ObjetoEnLaPista inherits ElementoMovil {
 	var imagen
 	var property valorXDesaparecer
 	var estoyVivo = true
-	var property soyAutoAmarillo = false
+	var property soyAutoAzul = false
 	const coleccion = []
 	const property bloques = []
 
@@ -39,8 +39,8 @@ class ObjetoEnLaPista inherits ElementoMovil {
 	}
 
 	method removerObjeto() {
-		game.removeVisual(self)
 		coleccion.remove(self)
+		game.removeVisual(self)
 		estoyVivo = false
 		puntaje.sumarPuntos(valorXDesaparecer)
 	}
@@ -161,8 +161,8 @@ class BloqueInvisible {
 		duenio.soyPlayer()
 	}
 
-	method soyAutoAmarillo() {
-		duenio.soyAutoAmarillo()
+	method soyAutoAzul() {
+		duenio.soyAutoAzul()
 	}
 
 }

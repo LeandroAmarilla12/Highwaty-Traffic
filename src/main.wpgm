@@ -1,11 +1,8 @@
 import wollok.game.*
-import Fondo.*
-import autos.*
-import juego.*
-import objetos.*
 import gameManager.*
 
 program HighwayTraffic {
+	
 	gameManager.configurarTablero()
 	gameManager.mostrarMenu()
 //	START

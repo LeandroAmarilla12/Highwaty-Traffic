@@ -4,37 +4,119 @@ import autos.*
 import Fondo.*
 import wollok.game.*
 
-//test "Mancha de Aceite" {
-//	const aceite = new ManchaAceite(position = game.at(1,1))
-//	const coleccion = []
-//	100.times(auto.chocarCon(aceite), coleccion.add(aceite.desplazamiento()))
-//	
-//	assert.equals(1,(coleccion.asSet()).sizes())
-//
-//}
-describe "test" {
 
-	method accion() {
-		auto.disparar()
-		tanque.chocarCon(juego.balasDePlayer().first())
+describe "Colisiones del jugador con objetos"{
+	method initialize(){
+		game.addVisual(auto)
+		
+	}
+	
+	test "Jugador colisiona con Mancha de Aceite y esta lo mueve"{
+		const posicionOriginal = auto.position()
+		const mancha = new ManchaAceite(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.aceite())
+		juego.aparecerEnemigo(mancha, juego.aceite())
+		auto.chocarCon(mancha)
+		assert.notEquals(posicionOriginal, auto.position()) 
+	}
+	
+	test "Jugador se queda sin balas y recargar cuando colisiona un kit de municion y este se destruye"{
+		auto.balas(0)
+		assert.equals(0,auto.balas())
+		const municion = new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.municiones())
+		juego.aparecerEnemigo(municion, juego.municiones())
+		auto.chocarCon(municion)
+		assert.equals(10,auto.balas())
+		assert.notThat(juego.municiones().contains(municion)) 
+	}
+	
+	test "Jugador aun tiene balas y cuando colisiona con kit  ni recarga ni se destruye el kit"{
+		auto.balas(5)
+		const municion = new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.municiones())
+		juego.aparecerEnemigo(municion, juego.municiones())
+		auto.chocarCon(municion)
+		assert.equals(5,auto.balas())
+		assert.that(juego.municiones().contains(municion)) 
+	}
+	
+	test "Jugador con poca vida, se cura colisionando con kit de reparacion y este se destruye"{
+		vida(2)
+		const reparador = new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.llaves())
+		juego.aparecerEnemigo(reparador, juego.llaves())
+		auto.chocarCon(reparador)
+		assert.equals(4,vida.cantidad())
+		///assert.that(juego.llaves().contains(reparador))
+	}
+	
+	test "Jugador con vida completa, colsiona con kit y sigue con la vida igual y no se destruye el kit"{
+		const reparador = new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.llaves())
+		juego.aparecerEnemigo(reparador, juego.llaves())
+		auto.chocarCon(reparador)
+		assert.equals(4,vida.cantidad())
+		assert.that(juego.llaves().contains(reparador))
+	}
+	
+	
+}
+
+
+
+describe "Colisiones de Autos Azules"{
+	
+	test "Jugador Impacta el auto Verde y lo destruye y  no"{
+		const autoAmarillo = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		juego.aparecerEnemigo(autoAmarillo, juego.enemigos()) 
+		autoAmarillo.choqueConPlayer()		
+		assert.notThat(juego.enemigos().contains(autoAmarillo))
+	}
+	
+	test "Chocar un Auto Azul daña al jugador"{
+		const autoAzul = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		juego.aparecerEnemigo(autoAzul, juego.enemigos()) 
+		autoAzul.choqueConPlayer()
+		assert.equals(3,vida.cantidad())		
+	}
+	
+	test "Al impactar una bala, el Auto Azul se destruye"{
+		const autoAzul = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		juego.aparecerEnemigo(autoAzul, juego.enemigos()) 
+		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
+		game.addVisual(bala)
+		autoAzul.recibirBala(bala)
+		assert.notThat(juego.enemigos().contains(autoAzul))		
+	}	
+}
+
+
+
+
+
+
+describe "Balas colisionan y dañan tanque" {
+	method initialize(){
+		tanque.crearBloques()
+	}
+	
+	method balaImpactaTanque() {
+		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
+		game.addVisual(bala)
+		tanque.recibirBala(bala)
 	}
 
-	method accion2() {
+	method balaImpactaBloqueInvisibleDeTanque() {
 		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
-			// juego.crearBloques(3, 3, bala)
 		game.addVisual(bala)
-		tanque.chocarCon(bala.bloques().first())
+		tanque.bloques().first().recibirBala(bala)
 	}
 
 	test "tanque tiene 5 de vida al recibir disparo 5 veces" {
 		assert.equals(10, tanque.vida())
-		5.times({ i => self.accion()})
+		5.times({ i => self.balaImpactaTanque()})
 		assert.equals(5, tanque.vida())
 	}
 
 	test "tanque tiene 5 de vida al recibir disparo 5 veces en los bloques invisibles" {
 		assert.equals(10, tanque.vida())
-		5.times({ i => self.accion2()})
+		5.times({ i => self.balaImpactaBloqueInvisibleDeTanque()})
 		assert.equals(5, tanque.vida())
 	}
 

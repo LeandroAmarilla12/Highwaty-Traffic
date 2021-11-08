@@ -3,6 +3,7 @@ import autos.*
 import puntaje.*
 import Fondo.*
 import juego.*
+import musica.*
 
 object gameManager {
 
@@ -15,13 +16,17 @@ object gameManager {
 
 	method mostrarMenu() {
 		if (!game.hasVisual(menu)) game.addVisual(menu)
+		game.schedule(1, { cancion.pausar()})
+		game.schedule(2, { cancion.reproducir(0.5)})
 		keyboard.enter().onPressDo{ juego.iniciar()}
-		keyboard.c().onPressDo{ self.creditos()}
-		keyboard.p().onPressDo{ self.controles()}
+		keyboard.num1().onPressDo{ self.controles()}
+		keyboard.num2().onPressDo{ self.creditos()}
 	}
 
 	method perdio() {
+		sonido.reproducir("gameOver.wav", 0.5)
 		game.clear()
+		self.pausarSonidos()
 		self.limpiarJuego()
 		game.addVisual(perder)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
@@ -43,8 +48,10 @@ object gameManager {
 	}
 
 	method gano() {
-		game.clear()
+		sonido.reproducir("aplausos.wav", 0.5)
 		self.limpiarJuego()
+		game.clear()
+		self.pausarSonidos()
 		game.addVisual(ganar)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
@@ -55,12 +62,17 @@ object gameManager {
 		game.addVisual(creditos)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
-	
+
 	method controles() {
 		game.clear()
 		self.limpiarJuego()
 		game.addVisual(controles)
 		keyboard.m().onPressDo{ self.mostrarMenu()}
+	}
+
+	method pausarSonidos() {
+		cancion.pausar()
+		motor.pausar()
 	}
 
 }
@@ -96,6 +108,7 @@ object creditos {
 	method position() = game.at(0, 0)
 
 }
+
 object controles {
 
 	method image() = "controls.png"

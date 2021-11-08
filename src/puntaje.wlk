@@ -24,7 +24,7 @@ class Numero {
 
 object centena inherits Numero {
 
-	var property position = game.at(11, 9)
+	var property position = game.at(11, 8)
 
 	override method valor() = puntaje.puntos().div(100)
 
@@ -32,7 +32,7 @@ object centena inherits Numero {
 
 object decena inherits Numero {
 
-	var property position = game.at(12, 9)
+	var property position = game.at(12, 8)
 
 	override method valor() = (puntaje.puntos() - centena.valor() * 100).div(10)
 
@@ -40,7 +40,7 @@ object decena inherits Numero {
 
 object unidad inherits Numero {
 
-	var property position = game.at(13, 9)
+	var property position = game.at(13, 8)
 
 	override method valor() = (puntaje.puntos() - centena.valor() * 100) - decena.valor() * 10
 
