@@ -33,7 +33,6 @@ object juego {
 	method agregarBordesDeRuta() {
 		self.crearParedes()
 		pared.forEach({ unaPared => game.addVisual(unaPared)})
-	// game.onTick(30,"paredes reiniciado",{pared.forEach{unaPared => unaPared.subir()}})
 	}
 
 	method agregarPlayer() {
@@ -43,7 +42,6 @@ object juego {
 		self.movimientoAuto()
 		game.addVisual(auto.bloque())
 		game.onCollideDo(auto.bloque(), { algo => auto.chocarCon(algo)})
-	// auto.bloques().forEach({bloque=>game.onCollideDo(bloque, {algo => bloque.chocarCon(algo)})})
 	}
 
 	method movimientoAuto() {
@@ -72,7 +70,6 @@ object juego {
 		game.addVisual(enemy)
 		if (enemy.soyAutoAmarillo()) {
 			game.addVisual(enemy.bloque())
-		// game.onCollideDo(enemy,{colisionado => enemy.chocarCon(colisionado)})
 		}
 	}
 
@@ -89,8 +86,7 @@ object juego {
 		(game.height() + 2).times({ i => pared.add(new ParedHorizontal(position = game.at(1, i - 1), valor = 1))})
 		(game.height() + 2).times({ i => pared.add(new ParedHorizontal(position = game.at(10, i - 1), valor = -1))})
 		(8).times({ i => pared.add(new ParedVertical(position = game.at(i, 12), valor = -1))})
-		(8).times({ i => pared.add(new ParedVertical(position = game.at(i, -1), valor = 1))})
-	// (game.height()+4).times({i => {self.aparecerEnemigo(new ParedIzquierda(position = game.at(0,i*2 -2)),pared,1,0)}})	
+		(8).times({ i => pared.add(new ParedVertical(position = game.at(i, -1), valor = 1))})	
 	}
 
 	method etapaFinal() {
@@ -108,7 +104,7 @@ object juego {
 	method accionesTanque() {
 		game.addVisual(tanque)
 		game.onCollideDo(tanque, { algo => tanque.chocarCon(algo)})
-			// game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
+		game.onTick(300,"accion tanque",{tanque.mover() tanque.disparar()})
 		tanque.crearBloques()
 	}
 
