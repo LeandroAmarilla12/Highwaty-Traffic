@@ -149,6 +149,7 @@ object tanque {
 	method recibirDanio() {
 		self.vida(self.vida() - 1)
 		if (self.vida() <= 0) {
+			bloques.forEach({bloque=>game.removeVisual(bloque)})
 			bloques.clear()
 			gameManager.gano()
 		}
