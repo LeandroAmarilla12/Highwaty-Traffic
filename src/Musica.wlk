@@ -29,12 +29,17 @@ object motor inherits SonidosEnLoop(audio = game.sound("Audio/motorAuto.wav")) {
 }
 
 object sonido {
-
+	var audio 
 	method reproducir(sonido, volumen) {
-		const audio = game.sound(sonido)
+	 	audio = game.sound(sonido)
 		audio.volume(volumen)
 		audio.play()
 	}
-
+	
+	method pausar() {
+		if (audio.played() and not audio.paused()) {
+			audio.pause()
+		}
+	}
 }
 

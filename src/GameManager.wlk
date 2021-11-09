@@ -15,6 +15,7 @@ object gameManager {
 	}
 
 	method mostrarMenu() {
+		
 		puntaje.puntos(0)
 		if (!game.hasVisual(menu)) game.addVisual(menu)
 		game.schedule(1, { cancion.pausar()})
@@ -31,7 +32,7 @@ object gameManager {
 		self.limpiarJuego()
 		game.addVisual(perder)
 		self.mostrarPuntos()
-		keyboard.m().onPressDo{ self.mostrarMenu()}
+		keyboard.m().onPressDo{ self.mostrarMenu() sonido.pausar()}	
 	}
 
 	method limpiarJuego() {
@@ -56,7 +57,7 @@ object gameManager {
 		self.pausarSonidos()
 		game.addVisual(ganar)
 		self.mostrarPuntos()
-		keyboard.m().onPressDo{ self.mostrarMenu()}
+		keyboard.m().onPressDo{ self.mostrarMenu() sonido.pausar()}
 	}
 
 	method creditos() {

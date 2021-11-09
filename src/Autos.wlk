@@ -18,9 +18,7 @@ object audio {
 }
 
 object auto {
-
 	var property position = game.at(5, 2)
-	// var posicionAux = self.position()
 	var property image = "Autos/player.png"
 	var property balas = 10
 	const property bloque = new BloqueInvisible(position = self.position().up(1), duenio = self)
