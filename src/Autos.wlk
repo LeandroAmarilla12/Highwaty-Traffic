@@ -126,7 +126,7 @@ object tanque {
 	const property bloques = []
 	var property position = game.at(4, 9)
 	var valor = 1
-	var property vida = 10
+	var property vida = 1
 
 	method crearBloques() {
 		bloques.add(new BloqueInvisible(position = self.position().up(1).right(1), duenio = self))
