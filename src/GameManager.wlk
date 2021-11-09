@@ -52,9 +52,9 @@ object gameManager {
 
 	method gano() {
 		sonido.reproducir("Audio/aplausos.wav", 0.5)
-		self.limpiarJuego()
 		game.clear()
 		self.pausarSonidos()
+		self.limpiarJuego()
 		game.addVisual(ganar)
 		self.mostrarPuntos()
 		keyboard.m().onPressDo{ self.mostrarMenu() sonido.pausar()}
