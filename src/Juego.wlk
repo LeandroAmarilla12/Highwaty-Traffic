@@ -49,8 +49,8 @@ object juego {
 		self.movimientoAuto()
 		game.addVisual(auto.bloque())
 		game.onCollideDo(auto.bloque(), { algo => auto.chocarCon(algo)})
-		motor.reproducir(0.3)		
-}
+		motor.reproducir(0.3)
+	}
 
 	method movimientoAuto() {
 		keyboard.up().onPressDo{ auto.vertical(1)}
@@ -61,15 +61,15 @@ object juego {
 
 	method agregarPuntaje() {
 		game.addVisual(centena)
-		centena.position(game.at(11,8))
+		centena.position(game.at(11, 8))
 		game.addVisual(decena)
-		decena.position(game.at(12,8))
+		decena.position(game.at(12, 8))
 		game.addVisual(unidad)
-		unidad.position(game.at(13,8))
+		unidad.position(game.at(13, 8))
 	}
 
 	method crearEnemigos() {
-		game.onTick(1000, "Crear enemigo auto azul", { self.aparecerEnemigo(new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = enemigos), enemigos) })
+		game.onTick(1000, "Crear enemigo auto azul", { self.aparecerEnemigo(new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = enemigos), enemigos)})
 		game.onTick(6000, "Crear nueva mancha de aceite", { self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(9), game.height()), coleccion = aceite), aceite)})
 		game.onTick(15000, "Crear nueva llave reparadora", { self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = llaves), llaves)})
 		game.onTick(30000, "Crear nueva municion", { self.aparecerEnemigo(new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = municiones), municiones)})

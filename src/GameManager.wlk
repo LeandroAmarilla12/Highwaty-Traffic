@@ -43,7 +43,7 @@ object gameManager {
 		juego.balasDePlayer().clear()
 		juego.municiones().clear()
 		vida.cantidad(4)
-		//puntaje.puntos(0)
+			// puntaje.puntos(0)
 		auto.balas(10)
 		auto.position(game.at(5, 2))
 		auto.bloque().position(game.at(5, 3))
@@ -77,15 +77,14 @@ object gameManager {
 		cancion.pausar()
 		motor.pausar()
 	}
-	
-	
+
 	method mostrarPuntos() {
 		game.addVisual(centena)
-		centena.position(game.at(6,2))
+		centena.position(game.at(6, 2))
 		game.addVisual(decena)
-		decena.position(game.at(7,2))
+		decena.position(game.at(7, 2))
 		game.addVisual(unidad)
-		unidad.position(game.at(8,2))
+		unidad.position(game.at(8, 2))
 	}
 
 }

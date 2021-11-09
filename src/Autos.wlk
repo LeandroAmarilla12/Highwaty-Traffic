@@ -6,15 +6,15 @@ import Objetos.*
 import GameManager.*
 import Musica.*
 
-object audio{
+object audio {
+
 	const audio = game.sound("Audio/motorAuto.wav")
-	
-	
-	
-	method reproducir(){
-		audio.shouldLoop(true) 
+
+	method reproducir() {
+		audio.shouldLoop(true)
 		audio.play()
 	}
+
 }
 
 object auto {
@@ -57,7 +57,7 @@ object auto {
 		if (balas > 0) {
 			self.crearBala(new BalaDePlayer(position = self.position().up(2), coleccion = juego.balasDePlayer()), juego.balasDePlayer())
 			balas -= 1
-			sonido.reproducir("Audio/balaAuto.wav",1)
+			sonido.reproducir("Audio/balaAuto.wav", 1)
 		} else {
 			game.say(self, "Encontrá municiones!!")
 		}
@@ -128,7 +128,7 @@ object tanque {
 	const property bloques = []
 	var property position = game.at(4, 9)
 	var valor = 1
-	var property vida = 1
+	var property vida = 10
 
 	method crearBloques() {
 		bloques.add(new BloqueInvisible(position = self.position().up(1).right(1), duenio = self))
@@ -170,15 +170,13 @@ object tanque {
 	method recibirBala(unaBala) {
 		unaBala.removerObjeto()
 		self.recibirDanio()
-		
 	}
 
 	method disparar() {
 		if (1.randomUpTo(20) > 10) {
 			juego.aparecerEnemigo(new BalaDeTanque(position = self.position().down(1), coleccion = juego.balasDeTanque()), juego.balasDeTanque())
-			sonido.reproducir("Audio/balaTanque.wav",1)
+			sonido.reproducir("Audio/balaTanque.wav", 1)
 		}
-	
 	}
 
 }

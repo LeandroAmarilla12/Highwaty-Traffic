@@ -169,7 +169,7 @@ class Mas25 inherits ObjetoEnLaPista {
 
 }
 
-class Explosion inherits ObjetoEnLaPista( imagen = "Autos/explosion.png") {
+class Explosion inherits ObjetoEnLaPista(imagen = "Autos/explosion.png") {
 
 	override method choqueConPlayer() {
 	}

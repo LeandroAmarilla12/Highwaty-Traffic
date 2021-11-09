@@ -17,7 +17,7 @@ class Numero {
 	method valor()
 
 	method image() {
-		return "Puntaje/"+ (self.valor().stringValue()) + ".png"
+		return "Puntaje/" + (self.valor().stringValue()) + ".png"
 	}
 
 }

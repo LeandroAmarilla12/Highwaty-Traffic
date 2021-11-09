@@ -5,104 +5,99 @@ import Fondo.*
 import wollok.game.*
 import Puntaje.*
 
+describe "Colisiones del jugador con objetos" {
 
-
-describe "Colisiones del jugador con objetos"{
-	method initialize(){
+	method initialize() {
 		game.addVisual(auto)
-		
 	}
-	
-	test "Jugador colisiona con Mancha de Aceite y esta lo mueve"{
+
+	test "Jugador colisiona con Mancha de Aceite y esta lo mueve" {
 		const posicionOriginal = auto.position()
 		const mancha = new ManchaAceite(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.aceite())
 		juego.aparecerEnemigo(mancha, juego.aceite())
 		auto.chocarCon(mancha)
-		assert.notEquals(posicionOriginal, auto.position()) 
+		assert.notEquals(posicionOriginal, auto.position())
 	}
-	
-	test "Jugador se queda sin balas y recargar cuando colisiona un kit de municion y este se destruye"{
+
+	test "Jugador se queda sin balas y recargar cuando colisiona un kit de municion y este se destruye" {
 		auto.balas(0)
-		assert.equals(0,auto.balas())
+		assert.equals(0, auto.balas())
 		const municion = new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.municiones())
 		juego.aparecerEnemigo(municion, juego.municiones())
 		auto.chocarCon(municion)
-		assert.equals(10,auto.balas())
-		assert.notThat(juego.municiones().contains(municion)) 
+		assert.equals(10, auto.balas())
+		assert.notThat(juego.municiones().contains(municion))
 	}
-	
-	test "Jugador aun tiene balas y cuando colisiona con kit  ni recarga ni se destruye el kit"{
+
+	test "Jugador aun tiene balas y cuando colisiona con kit  ni recarga ni se destruye el kit" {
 		auto.balas(5)
 		const municion = new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.municiones())
 		juego.aparecerEnemigo(municion, juego.municiones())
 		auto.chocarCon(municion)
-		assert.equals(5,auto.balas())
-		assert.that(juego.municiones().contains(municion)) 
+		assert.equals(5, auto.balas())
+		assert.that(juego.municiones().contains(municion))
 	}
-	
-	test "Jugador con poca vida, se cura colisionando con kit de reparacion y este se destruye"{
+
+	test "Jugador con poca vida, se cura colisionando con kit de reparacion y este se destruye" {
 		vida.cantidad(2)
 		const reparador = new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.llaves())
 		juego.aparecerEnemigo(reparador, juego.llaves())
 		auto.chocarCon(reparador)
-		assert.equals(4,vida.cantidad())
+		assert.equals(4, vida.cantidad())
 		assert.notThat(juego.llaves().contains(reparador))
 	}
-	
-	test "Jugador con vida completa, colsiona con kit y sigue con la vida igual y no se destruye el kit"{
+
+	test "Jugador con vida completa, colsiona con kit y sigue con la vida igual y no se destruye el kit" {
 		const reparador = new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.llaves())
 		juego.aparecerEnemigo(reparador, juego.llaves())
 		auto.chocarCon(reparador)
-		assert.equals(4,vida.cantidad())
+		assert.equals(4, vida.cantidad())
 		assert.that(juego.llaves().contains(reparador))
 	}
-	
-	test "Recibir balas de Tanque dañan quitan la mitad de vida"{
+
+	test "Recibir balas de Tanque dañan quitan la mitad de vida" {
 		const balaDeTanque = new BalaDeTanque(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.balasDeTanque())
-		juego.aparecerEnemigo(balaDeTanque, juego.balasDeTanque()) 
+		juego.aparecerEnemigo(balaDeTanque, juego.balasDeTanque())
 		auto.bloque().chocarCon(balaDeTanque)
-		assert.equals(2,vida.cantidad())
-		assert.notThat(juego.balasDeTanque().contains(balaDeTanque))	
+		assert.equals(2, vida.cantidad())
+		assert.notThat(juego.balasDeTanque().contains(balaDeTanque))
 	}
-	
+
 }
 
+describe "Colisiones de Autos Azules" {
 
-
-describe "Colisiones de Autos Azules"{
-	
-	test "Jugador Impacta el auto Azul y lo destruye"{
-		const autoAmarillo = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
-		juego.aparecerEnemigo(autoAmarillo, juego.enemigos()) 
-		autoAmarillo.choqueConPlayer()		
+	test "Jugador Impacta el auto Azul y lo destruye" {
+		const autoAmarillo = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		juego.aparecerEnemigo(autoAmarillo, juego.enemigos())
+		autoAmarillo.choqueConPlayer()
 		assert.notThat(juego.enemigos().contains(autoAmarillo))
 	}
-	
-	test "Chocar un Auto Azul daña al jugador"{
-		const autoAzul = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
-		juego.aparecerEnemigo(autoAzul, juego.enemigos()) 
+
+	test "Chocar un Auto Azul daña al jugador" {
+		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		juego.aparecerEnemigo(autoAzul, juego.enemigos())
 		autoAzul.choqueConPlayer()
-		assert.equals(3,vida.cantidad())		
+		assert.equals(3, vida.cantidad())
 	}
-	
-	test "Al impactar una bala, el Auto Azul se destruye"{
-		const autoAzul = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
-		juego.aparecerEnemigo(autoAzul, juego.enemigos()) 
+
+	test "Al impactar una bala, el Auto Azul se destruye" {
+		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		juego.aparecerEnemigo(autoAzul, juego.enemigos())
 		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
 		game.addVisual(bala)
 		autoAzul.recibirBala(bala)
-		assert.notThat(juego.enemigos().contains(autoAzul))		
-	}	
+		assert.notThat(juego.enemigos().contains(autoAzul))
+	}
+
 }
 
-
-
-
 describe "Colisiones Del Tanque" {
-	method initialize(){
+
+	method initialize() {
 		tanque.crearBloques()
 	}
-	
+
 	method balaImpactaTanque() {
 		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
 		game.addVisual(bala)
@@ -126,35 +121,37 @@ describe "Colisiones Del Tanque" {
 		5.times({ i => self.balaImpactaBloqueInvisibleDeTanque()})
 		assert.equals(5, tanque.vida())
 	}
-	
+
 }
 
-describe "Puntaje"{
-	test "Auto enemigo desaparece y suma 5 puntos"{
+describe "Puntaje" {
+
+	test "Auto enemigo desaparece y suma 5 puntos" {
 		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
 		game.addVisual(autoAzul)
 		game.addVisual(autoAzul.bloque())
 		autoAzul.removerObjeto()
-		assert.equals(5,puntaje.puntos())
+		assert.equals(5, puntaje.puntos())
 	}
-	
-	test "Jugador colisiona con auto enemigo, no suma si no que resta 10 puntos"{
+
+	test "Jugador colisiona con auto enemigo, no suma si no que resta 10 puntos" {
 		puntaje.puntos(15)
 		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
 		game.addVisual(autoAzul)
 		game.addVisual(autoAzul.bloque())
 		autoAzul.choqueConPlayer()
-		assert.equals(5,puntaje.puntos())
+		assert.equals(5, puntaje.puntos())
 	}
-	
-	test "Destruir a un enemigo con balas sumas 25 puntos"{
+
+	test "Destruir a un enemigo con balas sumas 25 puntos" {
 		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
 		game.addVisual(autoAzul)
 		game.addVisual(autoAzul.bloque())
 		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
 		game.addVisual(bala)
 		autoAzul.recibirBala(bala)
-		assert.equals(25,puntaje.puntos())
+		assert.equals(25, puntaje.puntos())
 	}
+
 }
 
