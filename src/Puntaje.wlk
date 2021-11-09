@@ -1,5 +1,5 @@
 import wollok.game.*
-import autos.*
+import Autos.*
 import Fondo.*
 
 object puntaje {
@@ -17,7 +17,7 @@ class Numero {
 	method valor()
 
 	method image() {
-		return self.valor().stringValue() + ".png"
+		return "Puntaje/"+ (self.valor().stringValue()) + ".png"
 	}
 
 }

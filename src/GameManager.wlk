@@ -1,9 +1,9 @@
 import wollok.game.*
-import autos.*
-import puntaje.*
+import Autos.*
+import Puntaje.*
 import Fondo.*
-import juego.*
-import musica.*
+import Juego.*
+import Musica.*
 
 object gameManager {
 
@@ -25,7 +25,7 @@ object gameManager {
 	}
 
 	method perdio() {
-		sonido.reproducir("gameOver.wav", 0.5)
+		sonido.reproducir("Audio/gameOver.wav", 0.5)
 		game.clear()
 		self.pausarSonidos()
 		self.limpiarJuego()
@@ -50,7 +50,7 @@ object gameManager {
 	}
 
 	method gano() {
-		sonido.reproducir("aplausos.wav", 0.5)
+		sonido.reproducir("Audio/aplausos.wav", 0.5)
 		self.limpiarJuego()
 		game.clear()
 		self.pausarSonidos()
@@ -92,7 +92,7 @@ object gameManager {
 
 object menu {
 
-	method image() = "menu.png"
+	method image() = "Menus/menu.png"
 
 	method position() = game.at(0, 0)
 
@@ -100,7 +100,7 @@ object menu {
 
 object ganar {
 
-	method image() = "win.png"
+	method image() = "Menus/win.png"
 
 	method position() = game.at(0, 0)
 
@@ -108,7 +108,7 @@ object ganar {
 
 object perder {
 
-	method image() = "gameOver.png"
+	method image() = "Menus/gameOver.png"
 
 	method position() = game.at(0, 0)
 
@@ -116,7 +116,7 @@ object perder {
 
 object creditos {
 
-	method image() = "credits.png"
+	method image() = "Menus/credits.png"
 
 	method position() = game.at(0, 0)
 
@@ -124,7 +124,7 @@ object creditos {
 
 object controles {
 
-	method image() = "controls.png"
+	method image() = "Menus/controls.png"
 
 	method position() = game.at(0, 0)
 

@@ -20,11 +20,11 @@ class SonidosEnLoop {
 
 }
 
-object cancion inherits SonidosEnLoop(audio = game.sound("Spyhunter.wav")) {
+object cancion inherits SonidosEnLoop(audio = game.sound("Audio/Spyhunter.wav")) {
 
 }
 
-object motor inherits SonidosEnLoop(audio = game.sound("motorAuto.wav")) {
+object motor inherits SonidosEnLoop(audio = game.sound("Audio/motorAuto.wav")) {
 
 }
 

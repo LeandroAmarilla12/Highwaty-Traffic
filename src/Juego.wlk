@@ -1,10 +1,10 @@
 import wollok.game.*
-import autos.*
-import puntaje.*
+import Autos.*
+import Puntaje.*
 import Fondo.*
-import objetos.*
-import gameManager.*
-import musica.*
+import Objetos.*
+import GameManager.*
+import Musica.*
 
 object juego {
 
@@ -69,7 +69,7 @@ object juego {
 	}
 
 	method crearEnemigos() {
-		game.onTick(1000, "Crear enemigo auto azul", { self.aparecerEnemigo(new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = enemigos), enemigos) })
+		game.onTick(1000, "Crear enemigo auto azul", { self.aparecerEnemigo(new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = enemigos), enemigos) })
 		game.onTick(6000, "Crear nueva mancha de aceite", { self.aparecerEnemigo(new ManchaAceite(position = game.at(2.randomUpTo(9), game.height()), coleccion = aceite), aceite)})
 		game.onTick(15000, "Crear nueva llave reparadora", { self.aparecerEnemigo(new Reparador(position = game.at(2.randomUpTo(9), game.height()), coleccion = llaves), llaves)})
 		game.onTick(30000, "Crear nueva municion", { self.aparecerEnemigo(new Municion(position = game.at(2.randomUpTo(9), game.height()), coleccion = municiones), municiones)})

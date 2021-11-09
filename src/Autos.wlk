@@ -1,13 +1,13 @@
 import wollok.game.*
-import puntaje.*
+import Puntaje.*
 import Fondo.*
-import juego.*
-import objetos.*
-import gameManager.*
-import musica.*
+import Juego.*
+import Objetos.*
+import GameManager.*
+import Musica.*
 
 object audio{
-	const audio = game.sound("motorAuto.wav")
+	const audio = game.sound("Audio/motorAuto.wav")
 	
 	
 	
@@ -21,7 +21,7 @@ object auto {
 
 	var property position = game.at(5, 2)
 	// var posicionAux = self.position()
-	var property image = "player.png"
+	var property image = "Autos/player.png"
 	var property balas = 10
 	const property bloque = new BloqueInvisible(position = self.position().up(1), duenio = self)
 
@@ -57,7 +57,7 @@ object auto {
 		if (balas > 0) {
 			self.crearBala(new BalaDePlayer(position = self.position().up(2), coleccion = juego.balasDePlayer()), juego.balasDePlayer())
 			balas -= 1
-			sonido.reproducir("balaAuto.wav",1)
+			sonido.reproducir("Audio/balaAuto.wav",1)
 		} else {
 			game.say(self, "Encontrá municiones!!")
 		}
@@ -76,11 +76,11 @@ object vida {
 	var property cantidad = 4
 	var property position = game.at(10, 10)
 
-	method image() = "corazon" + cantidad.max(0) + ".png"
+	method image() = "Corazones/corazon" + cantidad.max(0) + ".png"
 
 }
 
-class AutoAzul inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparecer = 5, soyAutoAzul = true) {
+class AutoAzul inherits ObjetoEnLaPista(imagen = "Autos/enemigo1.png", valorXDesaparecer = 5, soyAutoAzul = true) {
 
 	const property bloque = new BloqueInvisible(position = self.position().up(1), duenio = self)
 
@@ -110,13 +110,13 @@ class AutoAzul inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparec
 	}
 
 	method explocion(posicion) {
-		const explocion = new Explosion(position = posicion, imagen = "explosion.png", valorXDesaparecer = 0)
+		const explocion = new Explosion(position = posicion, valorXDesaparecer = 0)
 		game.addVisual(explocion)
 		game.schedule(300, { game.removeVisual(explocion)})
 	}
 
 	method bonif(posicion) {
-		const bonificacion = new Mas50(position = posicion, imagen = "+25.png", valorXDesaparecer = 0)
+		const bonificacion = new Mas25(position = posicion, imagen = "Puntaje/+25.png", valorXDesaparecer = 0)
 		game.addVisual(bonificacion)
 		game.schedule(700, { game.removeVisual(bonificacion)})
 	}
@@ -128,7 +128,7 @@ object tanque {
 	const property bloques = []
 	var property position = game.at(4, 9)
 	var valor = 1
-	var property vida = 10
+	var property vida = 1
 
 	method crearBloques() {
 		bloques.add(new BloqueInvisible(position = self.position().up(1).right(1), duenio = self))
@@ -137,7 +137,7 @@ object tanque {
 		bloques.forEach({ bloque => game.addVisual(bloque)})
 	}
 
-	method image() = "tanque.png"
+	method image() = "Autos/tanque.png"
 
 	method choqueConPlayer() {
 		gameManager.perdio()
@@ -176,7 +176,7 @@ object tanque {
 	method disparar() {
 		if (1.randomUpTo(20) > 10) {
 			juego.aparecerEnemigo(new BalaDeTanque(position = self.position().down(1), coleccion = juego.balasDeTanque()), juego.balasDeTanque())
-			sonido.reproducir("balaTanque.wav",1)
+			sonido.reproducir("Audio/balaTanque.wav",1)
 		}
 	
 	}

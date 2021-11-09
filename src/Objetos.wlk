@@ -1,8 +1,8 @@
 import wollok.game.*
-import autos.*
-import puntaje.*
+import Autos.*
+import Puntaje.*
 import Fondo.*
-import juego.*
+import Juego.*
 
 class ElementoMovil {
 
@@ -58,11 +58,8 @@ class ObjetoEnLaPista inherits ElementoMovil {
 
 }
 
-class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesaparecer = 0) {
+class ManchaAceite inherits ObjetoEnLaPista(imagen = "Objetos/aceite.png", valorXDesaparecer = 0) {
 
-//	override method chocarCon(unAuto){
-//		 
-//	}
 	override method choqueConPlayer() {
 		self.desplazamientoAleatorio(auto)
 	}
@@ -78,7 +75,7 @@ class ManchaAceite inherits ObjetoEnLaPista(imagen = "aceite.png", valorXDesapar
 
 }
 
-class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer = 0) {
+class Reparador inherits ObjetoEnLaPista(imagen = "Objetos/llave.png", valorXDesaparecer = 0) {
 
 	override method choqueConPlayer() {
 		if (vida.cantidad() < 4) {
@@ -89,7 +86,7 @@ class Reparador inherits ObjetoEnLaPista(imagen = "llave.png", valorXDesaparecer
 
 }
 
-class Municion inherits ObjetoEnLaPista(imagen = "municiones.png", valorXDesaparecer = 0) {
+class Municion inherits ObjetoEnLaPista(imagen = "Objetos/municiones.png", valorXDesaparecer = 0) {
 
 	override method choqueConPlayer() {
 		if (auto.balas() == 0) {
@@ -100,7 +97,7 @@ class Municion inherits ObjetoEnLaPista(imagen = "municiones.png", valorXDesapar
 
 }
 
-class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDesaparecer = 0) {
+class BalaDeTanque inherits ObjetoEnLaPista(imagen = "Balas/balaTanque.png", valorXDesaparecer = 0) {
 
 	override method choqueConPlayer() {
 		vida.cantidad(vida.cantidad() - 2)
@@ -112,9 +109,7 @@ class BalaDeTanque inherits ObjetoEnLaPista(imagen = "balaTanque.png", valorXDes
 
 }
 
-class BalaDePlayer inherits ObjetoEnLaPista(imagen = "balaPlayer.png", valorXDesaparecer = 0) {
-
-	override method image() = "llama0.png"
+class BalaDePlayer inherits ObjetoEnLaPista(imagen = "Balas/balaPlayer.png", valorXDesaparecer = 0) {
 
 	override method choqueConTanque() {
 		tanque.recibirDanio()
@@ -167,14 +162,14 @@ class BloqueInvisible {
 
 }
 
-class Mas50 inherits ObjetoEnLaPista {
+class Mas25 inherits ObjetoEnLaPista {
 
 	override method choqueConPlayer() {
 	}
 
 }
 
-class Explosion inherits objetos.ObjetoEnLaPista {
+class Explosion inherits ObjetoEnLaPista( imagen = "Autos/explosion.png") {
 
 	override method choqueConPlayer() {
 	}

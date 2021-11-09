@@ -1,13 +1,13 @@
 import wollok.game.*
-import autos.*
-import juego.*
-import objetos.*
+import Autos.*
+import Juego.*
+import Objetos.*
 
 object fondo inherits ElementoMovil(position = game.at(0, 0)) {
 
 	const initialPosition = game.at(0, 0)
 
-	method image() = "fondo.png"
+	method image() = "Fondo/fondo.png"
 
 	method choqueConPlayer() {
 	}
@@ -25,13 +25,13 @@ object fondo inherits ElementoMovil(position = game.at(0, 0)) {
 object cartel{
 	method position() = game.at(10, 7)
 
-	method image() = "cartelVacio.png"
+	method image() = "Menus/cartelVacio.png"
 }
 
 object cantidadBala{
 	method position() = game.at(12,9)
 	
-	method image() = ""+auto.balas()+".png"
+	method image() = "Puntaje/"+auto.balas()+".png"
 }
 
 class ParedHorizontal {

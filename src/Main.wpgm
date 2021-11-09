@@ -1,5 +1,5 @@
 import wollok.game.*
-import gameManager.*
+import GameManager.*
 
 program HighwayTraffic {
 	
@@ -8,3 +8,4 @@ program HighwayTraffic {
 //	START
 	game.start()
 }
+ 

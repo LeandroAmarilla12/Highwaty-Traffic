@@ -1,9 +1,9 @@
-import juego.*
-import objetos.*
-import autos.*
+import Juego.*
+import Objetos.*
+import Autos.*
 import Fondo.*
 import wollok.game.*
-import puntaje.*
+import Puntaje.*
 
 
 
