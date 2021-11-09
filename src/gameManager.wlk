@@ -54,8 +54,8 @@ object gameManager {
 		self.limpiarJuego()
 		game.clear()
 		self.pausarSonidos()
-		self.mostrarPuntos()
 		game.addVisual(ganar)
+		self.mostrarPuntos()
 		keyboard.m().onPressDo{ self.mostrarMenu()}
 	}
 

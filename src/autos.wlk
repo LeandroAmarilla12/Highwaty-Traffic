@@ -102,7 +102,7 @@ class AutoAzul inherits ObjetoEnLaPista(imagen = "enemigo1.png", valorXDesaparec
 	}
 
 	override method recibirBala(unaBala) {
-		self.valorXDesaparecer(50)
+		self.valorXDesaparecer(25)
 		self.removerObjeto()
 		unaBala.removerObjeto()
 		self.explocion(self.position())

@@ -3,7 +3,7 @@ import objetos.*
 import autos.*
 import Fondo.*
 import wollok.game.*
-
+import puntaje.*
 
 
 
@@ -71,7 +71,7 @@ describe "Colisiones del jugador con objetos"{
 
 describe "Colisiones de Autos Azules"{
 	
-	test "Jugador Impacta el auto Verde y lo destruye y  no"{
+	test "Jugador Impacta el auto Azul y lo destruye"{
 		const autoAmarillo = new autos.AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
 		juego.aparecerEnemigo(autoAmarillo, juego.enemigos()) 
 		autoAmarillo.choqueConPlayer()		
@@ -94,8 +94,6 @@ describe "Colisiones de Autos Azules"{
 		assert.notThat(juego.enemigos().contains(autoAzul))		
 	}	
 }
-
-
 
 
 
@@ -129,5 +127,34 @@ describe "Colisiones Del Tanque" {
 		assert.equals(5, tanque.vida())
 	}
 	
+}
+
+describe "Puntaje"{
+	test "Auto enemigo desaparece y suma 5 puntos"{
+		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		game.addVisual(autoAzul)
+		game.addVisual(autoAzul.bloque())
+		autoAzul.removerObjeto()
+		assert.equals(5,puntaje.puntos())
+	}
+	
+	test "Jugador colisiona con auto enemigo, no suma si no que resta 10 puntos"{
+		puntaje.puntos(15)
+		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		game.addVisual(autoAzul)
+		game.addVisual(autoAzul.bloque())
+		autoAzul.choqueConPlayer()
+		assert.equals(5,puntaje.puntos())
+	}
+	
+	test "Destruir a un enemigo con balas sumas 25 puntos"{
+		const autoAzul = new AutoAzul(position = game.at(2.randomUpTo(9), game.height()), coleccion = juego.enemigos())
+		game.addVisual(autoAzul)
+		game.addVisual(autoAzul.bloque())
+		const bala = new BalaDePlayer(position = game.at(0, 0), coleccion = juego.balasDePlayer())
+		game.addVisual(bala)
+		autoAzul.recibirBala(bala)
+		assert.equals(25,puntaje.puntos())
+	}
 }
 
