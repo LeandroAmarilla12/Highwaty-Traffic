@@ -11,7 +11,7 @@
 
 <img src="fotos\menu.png">
 <img src="fotos\foto1.png">
-<img src="fotos\gameOver.png">
+<img src="fotos\gameover.png">
 
 ## Reglas de Juego / Instrucciones
 
